@@ -9,13 +9,16 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "adm-zip":"0.4.7",
-    "stylus":"*.*",
-    "body-parser":"*.*",
-    "gulp":"*.*",
-    "gulp-livereload":"*.*",
-    "gulp-notify":"*.*",
-    "gulp-nodemon":"*.*"
+    "adm-zip": "0.4.7",
+    "body-parser": "*.*",
+    "express-session": "^1.13.0",
+    "gulp": "*.*",
+    "gulp-livereload": "*.*",
+    "gulp-nodemon": "*.*",
+    "gulp-notify": "*.*",
+    "handlebars": "^4.0.5",
+    "octonode": "^0.7.4",
+    "stylus": "*.*"
   },
   "license": "MIT"
 }
