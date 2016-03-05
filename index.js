@@ -5,11 +5,12 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var octonode = require('octonode');
-var github = require('./controllers/github.js')
 var Handlebars = require('handlebars');
 
+
 // Controllers
-// var models = require('./models/modelHelper.js');
+var models = require('./controllers/controllerHelper.js');
+var github = require('./controllers/github.js')
 
 // Creating the Web Server
 var app = express();
