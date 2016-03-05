@@ -5,7 +5,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var octonode = require('octonode');
-var github = require('controllers/github.js')
+var github = require('./controllers/github.js')
 var Handlebars = require('handlebars');
 
 // Controllers
@@ -62,11 +62,13 @@ app.post('/searchModules', sess, content);
 
 // Getting Post information
 app.post('/github', function (req, res) {
-    if (req.body.username == 'undefined' || req.body.password == 'undefined') {
+
+    if (req.body.git_user == 'undefined' || req.body.git_pass == 'undefined') {
         res.redirect('/');
     } else {
-        var username = req.body.username,
-            password = req.body.password;
+        var username = req.body.git_user,
+            password = req.body.git_pass;
+        github.username = 'test';
         github.startGithub(username, password);
         var client = github.createClient();
         req.session.client = client;
