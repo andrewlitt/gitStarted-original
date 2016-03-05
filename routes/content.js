@@ -8,7 +8,7 @@ module.exports = (function() {
     'use strict';
     var router = express.Router();
 
-    router.get('/content', function(req, res) {
+    router.get('/github', function(req, res) {
     	// console.log(req.session);
     	// console.log(req.session.following);
     	var username = req.session.client.token.username;
