@@ -1,0 +1,19 @@
+{
+  "name": "HackUROwn",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zackharley/QHacks"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "adm-zip":"0.4.7",
+    "gulp":"*.*",
+    "gulp-livereload":"*.*",
+    "gulp-notify":"*.*",
+    "gulp-nodemon":"*.*"
+  },
+  "license": "MIT"
+}
