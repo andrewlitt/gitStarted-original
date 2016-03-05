@@ -114,7 +114,7 @@ function checkDir(root) {
     }
 }
 
-function createFile(name, , contents) {
+function createFile(name, contents) {
     //create file in github repo at 
 }
 
