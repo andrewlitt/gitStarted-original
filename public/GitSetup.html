@@ -13,12 +13,13 @@
         </div>
         <div class="changingDiv">
             <center>
-                <h1 class="loginTitle">Setup Github</h1>
-                <div class="gitlogin_field">
-                    <input id="git_reponame" name="git_reponame" class="reponame" placeholder="Repository Name">
-                    <input id="git_contributors" name="git_contributors" class="contributors" placeholder="Password">
-                    <a id="submit_image_button" class="">Submit</a>
-                </div>
+                <h1 class="loginTitle">Setup Repository</h1>
+                 <form class="gitrepo_field" method="post" action="girRepo">
+                    <input id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
+                    <input id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
+                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
+                    <input id="submit_image_button" class="submitButton" type="submit" value="Submit">
+                </form>
             </center>
         </div>
     </div>
