@@ -67,8 +67,13 @@ app.post('/content', function(req, res) {
 				  password: password
 				});
     	req.session.client = client;
+    	// // console.log(client);
+    	// req.session.avatar = client['avatar_url'];
+    	// console.log(req.session.avatar);
     	client.get('/user', {}, function (err, status, body, headers) {
 			  req.session.userInfo = body; //json object
+			  req.session.avatar = body.avatar_url;
+			  req.session.github_profile = body.html_url;
 			  client.get('/user/following', {}, function (err, status, body, headers) {
 		    		req.session.following = body;
 		    		res.redirect('/content');
