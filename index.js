@@ -26,6 +26,8 @@ app.use(stylus.middleware({
          }
      }));
 
+app.use(express.static('public'));
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
  
