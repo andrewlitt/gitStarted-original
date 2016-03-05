@@ -8,7 +8,7 @@ var github = require('octonode');
 var Handlebars = require('handlebars');
 
 // Controllers
-// var models = require('./models/modelHelper.js');
+var models = require('./models/modelHelper.js');
 
 // Creating the Web Server
 var app = express();
