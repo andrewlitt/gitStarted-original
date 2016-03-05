@@ -5,7 +5,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var octonode = require('octonode');
-var github = require('controllers/github.js')
+var github = require('./controllers/github.js')
 var Handlebars = require('handlebars');
 
 // Controllers
@@ -65,11 +65,15 @@ app.post('/github', function (req, res) {
     if (req.body.username == 'undefined' || req.body.password == 'undefined') {
         res.redirect('/');
     } else {
-        var username = req.body.username,
-            password = req.body.password;
+        console.log(req.body);
+        var username = req.body.git_user;
+        var password = req.body.git_pass;
         github.startGithub(username, password);
+        console.log(username + ', ' + password)
         var client = github.createClient();
+        github.createRepo('Test', 'this is a test repo');
         req.session.client = client;
+        req.session.clientAvatarURL = client.avatar_url;
         client.get('/user', {}, function (err, status, body, headers) {
             req.session.userInfo = body; //json object
             client.get('/user/following', {}, function (err, status, body, headers) {
