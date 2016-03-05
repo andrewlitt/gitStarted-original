@@ -7,19 +7,20 @@ var Ghub = function () {
     this.repo = null;
 
     this.startGithub = function (username, password) {
-        _setCredentials(username, password);
+        this.setCredentials(username, password);
     }
 
-    function _setCredentials(username, password) {
+    this.setCredentials = function(username, password) {
         this.username = username;
         this.password = password;
     }
 
-    this.createClient() {
-        return github.client({
+    this.createClient = function() {
+        var client = github.client({
             username: this.username,
             password: this.password
         });
+        return client;
     }
 
     this.createRepo = function (name, desc) {
