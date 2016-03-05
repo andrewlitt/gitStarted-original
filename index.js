@@ -30,7 +30,7 @@ app.use(stylus.middleware({
 app.use(express.static('public'));
 var sess = session({
 	secret: 'gitslacking', 
-	cookie: { maxAge: 3600000 }
+	cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 Hours
 });
 
 // Setting up the session
@@ -54,6 +54,7 @@ var content = require('./routes/content.js');
 app.use('/', sess, indexPage);
 app.get('/slack', sess, slackContent);
 app.get('/content', sess, content);
+app.post('/searchModules', sess, content);
 
 // Getting Post information
 app.post('/content', function(req, res) {
@@ -75,6 +76,14 @@ app.post('/content', function(req, res) {
 			});
     }
 });
+
+app.post('/modules', function (req, res) {
+	console.log(req.body.modules);
+});	
+
+// app.post('/searchModules', function(req, res) {
+
+// });
 
 var server = app.listen(3000, function () {
  

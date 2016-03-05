@@ -2,9 +2,29 @@
 <html>
 <head>
 	<title>Quit Slackin' Git Started</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 </head>
 <body>
 	<h1>CONTENT</h1>
 	<h2>{{username}}</h2>
+
+	<form method="post"  action="/searchModules">
+		<input type="text" name="searchModules">
+		<button type="submit">Search</button>
+	</form>
+
+	<form method="post" action="/modules">
+		<ul>{{#node_modules}}
+			<li class=""><input type="checkbox" name="modules" value="{{name}}"/><a href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></li>
+			{{/node_modules}}
+		</ul>
+		<button type="submit">Do it</button>
+	</form>
+
+	<script>
+		$(document).ready(function() {
+
+		});
+	</script>
 </body>
 </html>
