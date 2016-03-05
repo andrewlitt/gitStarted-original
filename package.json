@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "adm-zip":"0.4.7",
+    "stylus":"*.*",
+    "body-parser":"*.*",
     "gulp":"*.*",
     "gulp-livereload":"*.*",
     "gulp-notify":"*.*",
