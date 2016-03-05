@@ -15,7 +15,7 @@ var Ghub = function () {
         this.password = password;
     }
 
-    function _createClient() {
+    this.createClient() {
         return github.client({
             username: this.username,
             password: this.password
@@ -23,7 +23,7 @@ var Ghub = function () {
     }
 
     this.createRepo = function (name, desc) {
-        var client = _createClient(this.username, this.password);
+        var client = this.createClient(this.username, this.password);
         client.post("/user/repos", {
             "name": name,
             "description": desc
@@ -50,7 +50,7 @@ var Ghub = function () {
     }
 
     function addFile(repoName, filename, content) {
-        var client = _createClient(this.username, this.password);
+        var client = this.createClient(this.username, this.password);
         var ghrepo = client.repo(this.username + '/' + repoName);
         console.log(ghrepo);
         ghrepo.createContents(filename, 'Add ' + filename + ' template.', content, function(error, status, body, headers) {
