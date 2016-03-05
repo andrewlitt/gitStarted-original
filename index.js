@@ -5,11 +5,12 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var octonode = require('octonode');
-var github = require('./controllers/github.js')
 var Handlebars = require('handlebars');
 
+
 // Controllers
-// var models = require('./models/modelHelper.js');
+var models = require('./controllers/controllerHelper.js');
+var github = require('./controllers/github.js')
 
 // Creating the Web Server
 var app = express();
@@ -70,10 +71,12 @@ app.post('/github', function (req, res) {
     } else {
         var username = req.body.git_user,
             password = req.body.git_pass;
-        github.username = 'test';
         github.startGithub(username, password);
+        console.log(username + ', ' + password)
         var client = github.createClient();
+        github.createRepo('Test', 'this is a test repo');
         req.session.client = client;
+        req.session.clientAvatarURL = client.avatar_url;
         client.get('/user', {}, function (err, status, body, headers) {
             req.session.userInfo = body; //json object
             req.session.avatar = body.avatar_url;
