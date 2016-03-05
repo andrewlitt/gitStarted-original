@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quit Slackin' Git Started</title>
+	<title>Hackstarter!</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="main.css" />
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300|Rancho' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+	<div class="background-image"></div>
 	<div class="user_image">
 		<a href="{{github_profile_url}}"><img src="{{avatar_url}}"></a>
 	</div>
-	<h1>CONTENT</h1>
-	<h2>{{username}}</h2>
+	<div class="titlePage">
+        <div class="nameDiv">
+            <center><h1 class="headerTitle">Hackstarter</h1></center>
+        </div>
+        <div class="changingDiv">
+        	<h2>Hello {{username}}</h2>
+            <center>
+                <h2 class="loginTitle">Setup Repository</h2>
+                 <form class="gitrepo_field" method="post" action="/modules">
+                    <input id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
+                    <input id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
+                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
+                    <!-- <input id="submit_image_button" class="submitButton" type="submit" value="Submit"> -->
 
-	<form method="post" id="search_modules_form"  action="/searchModules">
-		<input type="text" id="search_modules_input" name="searchModules">
-		<button type="submit">Search</button>
-	</form>
+					<h2>Choose which modules you want</h2>
+                    <ul>
+                    	{{#node_modules}}
+						<li class="popular_modules"><label for="modules"><input type="checkbox" id="modules" name="modules" value="{{name}}"/><a href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
+						{{/node_modules}}
+					</ul>
+	
+					<form method="post" id="search_modules_form"  action="/searchModules">
+						<input type="text" id="search_modules_input" name="searchModules">
+						<button type="submit">Search</button>
+					</form>
 
-	<div id="search_module_results">
-		
-	</div>
+					<div id="search_module_results">
+						
+					</div>
 
-	<form method="post" action="/modules">
-		<ul>{{#node_modules}}
-			<li class=""><input type="checkbox" name="modules" value="{{name}}"/><a href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></li>
-			{{/node_modules}}
-		</ul>
-		<button type="submit">Do it</button>
-	</form>
-
+					<button type="submit">Do it</button>
+                </form>
+            </center>
+        </div>
+    </div>
 	<script>
 		$(document).ready(function() {
 			var $search_modules_results = $("#search_module_results");

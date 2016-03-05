@@ -52,10 +52,12 @@ app.use(function (req, res, next) {
 var indexPage = require('./routes/main.js');
 var slackContent = require('./routes/slack.js');
 var content = require('./routes/content.js');
+var gitLogin = require('./routes/gitlogin.js');
 
 // Setting up the Routes
 app.use('/', sess, indexPage);
 app.get('/slack', sess, slackContent);
+app.get('/GitLogin', sess, gitLogin)
 app.get('/github', sess, content);
 app.post('/searchModules', sess, content);
 

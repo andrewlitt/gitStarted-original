@@ -4,10 +4,10 @@
 }
 
 body {
-    background-image: url("pictures/mainsplash2.png");
-	background-size: 100vw 100vh;
-    background-repeat: no-repeat;
-	font-size:4vh;
+    // background-image: url("pictures/mainsplash2.png");
+	// background-size: 100vw 100vh;
+    // background-repeat: no-repeat;
+	// font-size:4vh;
     margin: 0;
 }
 
@@ -132,3 +132,97 @@ body {
 input::-webkit-input-placeholder {
 color: rgba(0,0,0,0.7) !important;
 }
+
+.user_image {
+    position:absolute;
+    width:80px;
+    height:80px;
+    top:10px;
+    right:10px;
+    float:left;
+    a {
+        display:block;
+        width:80px;
+        height:80px;
+        border-radius:100px;
+        img {
+            height:80px;
+            width:80px;
+            border-radius:100px;
+        }
+    }
+    a:hover, a:focus, a:active {
+        
+    }
+}
+
+.background-image {
+    background-image: url("pictures/mainsplash2.png");
+    background-size:100%;
+    height:100%;
+    width:100%;
+    z-index:-1;
+    position:fixed;
+}
+
+form.gitrepo_field {
+}
+
+ul {
+    padding:0px;
+    list-style:none;
+    margin-top:50px;
+    
+    li.popular_modules {
+        display:inline-block;
+        width:33.3333333%;
+        float:left;
+        height:75px;
+        background-color:#CCCCCC;
+        border:1px solid #000000;
+        box-sizing:border-box;
+        
+        position:relative;
+
+        label {
+            width:100%;
+            height:100%;
+            display:block;
+            margin:-16px;
+        }
+        
+        label + input[type=checkbox]:checked {
+            background-color:white;
+        }
+
+        a {
+            position:absolute; 
+            width:90%;
+            top:0;
+            right:0;
+            display:block;
+            height:30px;
+            line-height:30px;
+            text-decoration:none;
+            color:#000000;
+            font-size:1.3em;
+        }
+        
+        input[type=checkbox] {
+            position: absolute;
+            top:0;
+            left:0;
+            height:30px;
+        }
+        
+        p {
+            padding-top:30px;
+        }
+    }
+    
+    li.popular_modules:nth-child(3)::after {
+        content:"\n";
+        display:block;
+    }
+}
+

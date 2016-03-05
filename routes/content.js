@@ -22,7 +22,7 @@ module.exports = (function() {
     	client.get('/user/repos', {}, function (err, status, body, headers) {
     		fs.readFile(path.join(__dirname + '/../views/content.html'), 'utf-8', function(err, data) {
     			var template = Handlebars.compile(data);
-    			res.send(template({"username":username, "node_modules":npm.getCurrentTopModules(), "avatar_url":req.session.avatar}));
+    			res.send(template({"username":username, "node_modules":npm.getCurrentTopModules(), "avatar_url":req.session.avatar, "github_profile_url":req.session.github_profile}));
     		});
     	});
     });
