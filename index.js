@@ -62,12 +62,12 @@ app.post('/searchModules', sess, content);
 
 // Getting Post information
 app.post('/github', function (req, res) {
-    if (req.body.username == 'undefined' || req.body.password == 'undefined') {
+
+    if (req.body.git_user == 'undefined' || req.body.git_pass == 'undefined') {
         res.redirect('/');
     } else {
-        console.log(req.body);
-        var username = req.body.git_user;
-        var password = req.body.git_pass;
+        var username = req.body.git_user,
+            password = req.body.git_pass;
         github.startGithub(username, password);
         console.log(username + ', ' + password)
         var client = github.createClient();
@@ -76,6 +76,8 @@ app.post('/github', function (req, res) {
         req.session.clientAvatarURL = client.avatar_url;
         client.get('/user', {}, function (err, status, body, headers) {
             req.session.userInfo = body; //json object
+            req.session.avatar = body.avatar_url;
+			req.session.github_profile = body.html_url;
             client.get('/user/following', {}, function (err, status, body, headers) {
                 req.session.following = body;
                 res.redirect('/github');

@@ -5,13 +5,21 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 </head>
 <body>
+
+	<div class="user_image">
+		<a href="{{github_profile_url}}"><img src="{{avatar_url}}"></a>
+	</div>
 	<h1>CONTENT</h1>
 	<h2>{{username}}</h2>
 
-	<form method="post"  action="/searchModules">
-		<input type="text" name="searchModules">
+	<form method="post" id="search_modules_form"  action="/searchModules">
+		<input type="text" id="search_modules_input" name="searchModules">
 		<button type="submit">Search</button>
 	</form>
+
+	<div id="search_module_results">
+		
+	</div>
 
 	<form method="post" action="/modules">
 		<ul>{{#node_modules}}
@@ -23,7 +31,29 @@
 
 	<script>
 		$(document).ready(function() {
-
+			var $search_modules_results = $("#search_module_results");
+			var $search_modules_form = $("#search_modules_form");
+			console.log($('#search_modules_input').val());
+			$search_modules_form.on('submit', function(e) {
+				e.preventDefault();
+				$search_modules_results.empty();
+				$.ajax({
+					url:'/searchModules',
+					data:{
+						searchModules:$('#search_modules_input').val()
+					},
+					method:'post'
+				}).done(function(data) {
+					if (data) {
+						$search_modules_results.html(data);
+						$('#search_result_list_item > input').on('change', function() {
+							if (this.prop(':checked') == true) {
+								console.log("You want this one.");
+							}
+						});
+					}
+				});
+			});
 		});
 	</script>
 </body>
