@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gitStarted</title>
+    <link rel="icon" href="pictures/icon.ico">
+    <!-- CSS -->
+    <link rel="stylesheet" href="main.css" />
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300|Rancho' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div class="git_image">
+		<a href="https://github.com/zackharley/QHacks" target="_blank"><img src="pictures/github.png"></a>
+		<img src="pictures/point.png">
+	</div>
+    <div class="background-image"></div>
+	 <div class="titlePage">
+        <center>
+        <div>
+            <center><img class="mainTitle" src="pictures/logo.png"/></center>
+        </div>
+        <div>
+            <p class="description-text">Thats it! Thanks for using gitStarted.<br><br>Here's a link to your repository:<br><textarea class="username" style="height: auto" id="repoURL" rows="1" cols="50"></textarea></p>
+        </div>
+        <button id="copyBtn" class="copyButton">Copy To Clipboard</button>
+        </center>
+    </div>
+    <script>
+    var copyBtn = document.querySelector('#copyBtn');
+        copyBtn.addEventListener('click',function(){
+            var repoURL = document.querySelector('#repoURL');
+            repoURL.select();
+            document.execCommand('copy');
+            repoURL.deselect();
+        }, false);
+
+    </script>
+</body>
+</html>
