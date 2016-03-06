@@ -7,6 +7,7 @@ body {
     background-image: url("pictures/mainsplash2.png");
 	background-size: 100vw 100vh;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 	font-size:4vh;
     margin: 0;
 }
@@ -131,4 +132,51 @@ body {
 
 input::-webkit-input-placeholder {
 color: rgba(0,0,0,0.7) !important;
+}
+.frontend_setup {
+    font-size:4vh;
+    font-family:'Myriad Pro';
+}
+.smallLogo{
+    height: 6vh;
+    margin-bottom:-1vh;
+}
+
+
+/* Check Boxes */
+
+input[type="checkbox"]{
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
+    border-radius: 2vh;
+    margin-right: 0.5vw;
+    background:url(pictures/uncheck1.png);
+    background-size:contain;
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+    background:url(pictures/check1.png);
+    background-size:contain;
+}
+
+input[type="radio"]{
+    display:none;
+}
+input[type="radio"] + label span {
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
+    border-radius: 0vh;
+    margin-right: 0.5vw;
+    background:url(pictures/offradio.png);
+    background-size:contain;
+    cursor:pointer;
+}
+input[type="radio"]:checked + label span {
+    background:url(pictures/onradio.png);
+    background-size:contain;
 }
