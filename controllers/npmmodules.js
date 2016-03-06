@@ -14,7 +14,6 @@ var NPMModules = function() {
 	}
 
 	this.searchNPM = function(term, callback) {
-		console.log(term);
 		request(this.searchUrl+term, function(error, response, body) {
 			this.searchedModules = parseBody(body);
 			callback(this.searchedModules);
@@ -199,7 +198,6 @@ function parseBody(body) {
 			desc:desc,
 			version:version
 		}
-		console.log(obj);
 		modules.push(obj);
 	});
 

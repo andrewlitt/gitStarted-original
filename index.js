@@ -30,9 +30,15 @@ app.use(stylus.middleware({
 }));
 
 app.use(express.static('public'));
+
 var sess = session({
     secret: 'gitslacking',
-	cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 Hours
+	cookie: { 
+		maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+		httpOnly: true,
+    	secure: false
+	},
+	rolling: true
 });
 
 // Setting up the session
@@ -44,6 +50,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(function (req, res, next) {
+    if ('HEAD' == req.method || 'OPTIONS' == req.method) return next();
     res.locals.session = req.session;
     next();
 });
@@ -64,7 +71,7 @@ app.post('/searchModules', sess, content);
 
 
 // Getting Post information
-app.post('/github', function (req, res) {
+app.post('/githubLogin', function (req, res) {
 
     if (req.body.git_user == 'undefined' || req.body.git_pass == 'undefined') {
         res.redirect('/');
@@ -72,7 +79,6 @@ app.post('/github', function (req, res) {
         var username = req.body.git_user,
             password = req.body.git_pass;
         github.startGithub(username, password);
-        console.log(username + ', ' + password)
         var client = github.createClient();
         github.createRepo('Test', 'this is a test repo');
         req.session.client = client;
@@ -89,9 +95,9 @@ app.post('/github', function (req, res) {
     }
 });
 
-app.post('/modules', function (req, res) {
-	console.log(req.body.modules);
-});	
+app.post('/gitStarted', function (req, res) {
+	console.log(req.body);
+});
 
 // app.post('/searchModules', function(req, res) {
 
