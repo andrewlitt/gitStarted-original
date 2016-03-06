@@ -104,15 +104,16 @@ var Helper = function () {
     this.htmlEnd = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
 
     this.generateFiles = function(data) {
+        console.log('HERE!');
         github.startGithub(data.gitUsername, data.gitPassword);
         this.generateServerFile(data.serverName, data.dependencies);
         this.generatePackage(data.gitProjectName, data.gitUsername, data.serverName, data.dependencies);
-        if(data.nodeManager.name == 'Gulp') {
+        if(data.nodeManager.name == 'gulp') {
             this.generateGulp(data.serverName);
-        } else if(data.nodeManager.name == 'Grunt') {
+        } else if(data.nodeManager.name == 'grunt') {
             this.generateGrunt();
         }
-        this.generateREADME(data.gitProjectName, data.gitProjectDesc, data.nodeManager.name.toLowerCase());
+        this.generateREADME(data.gitProjectName, data.gitProjectDesc, data.nodeManager.name);
         this.generateHTML(data);
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
