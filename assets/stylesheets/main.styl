@@ -221,8 +221,7 @@ ul {
         margin:1%;
         float:left;
         height:75px;
-        background-color:#CCCCCC;
-        border:1px solid #000000;
+        border:1vh solid;
         box-sizing:border-box;
         
         position:relative;
@@ -238,14 +237,14 @@ ul {
         }
         
         label:hover {
-            background-color:rgba(255,255,255,1);
+            background-color: rgba(255,255,255,0.2) !important;
             border-radius: 5vh !important;
             cursor:pointer;
         }
         
         label.added-module {
-            background-color:white;
-            border-radius: 5vh !important;
+            background-color:white !important;
+            border-radius: 5vh;
         }
 
         a {
@@ -266,19 +265,26 @@ ul {
         }
         
         p {
+            font-size:0.9em;
             margin:0px;
         }
     }
-    
+    a {
+            width:auto;
+            height:30px;
+            line-height:30px;
+            text-decoration:none;
+            color:#000000;
+            font-size:1.3em;
+            text-align:center;
+        }
+        
     li.popular_modules:nth-child(3)::after {
         content:"";
         display:block;
     }
     li.popular_modules:hover {
-        background-color:#DCDCDC;
-    }
-    li.popular_modules {
-            background-color:#DCDCDC;
+        background-color: rgba(255,255,255,0.2);
     }
     li.popular_modules:nth-child(3n) {
         background-color: rgba(255,255,255,0.8);
@@ -292,13 +298,13 @@ ul {
         border-width: 1vh;
         border-color: #FFAC4C;
     }
-    li.search_result_list_item:nth-child(3)::after {
-            content:"";
-            display:block;
+    li.popular_modules:nth-child(3n-2):hover {
+        background-color: rgba(255,255,255,0.2);
     }
-    li.search_result_list_item:hover {
-            background-color:#DCDCDC;
+     li.popular_modules:nth-child(3n):hover {
+        background-color: rgba(255,255,255,0.2);
     }
+ 
 }
 
 
@@ -335,29 +341,39 @@ label {
     width:30%;
     margin:1%;
     float:left;
-    height:75px;
+    height:3em;
     background-color:#CCCCCC;
     border:1px solid #000000;
     box-sizing:border-box;
         
     position:relative;
-    border-radius: 5vh !important;
+    border-radius: 5vh;
     border-width: 1vh;
     border-color: rgba(255,255,255,1);
     background-color:rgba(255,255,255,0.8); 
 }
 #search_result_list_item:nth-child(3n) {
     background-color: rgba(255,255,255,0.8);
-    border-radius: 3vh;
+    border-radius: 5vh;
     border-width: 1vh;
     border-color: #FF724C;;
     }
 #search_result_list_item:nth-child(3n-2) {
     background-color: rgba(255,255,255,0.8);
-    border-radius: 3vh;
+    border-radius: 5vh;
     border-width: 1vh;
     border-color: #FFAC4C;
     }
+#search_result_list_item:nth-child(3n-2):hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+#search_result_list_item:nth-child(3n):hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+#search_result_list_item:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+ 
 
 
 /* Check Boxes */
