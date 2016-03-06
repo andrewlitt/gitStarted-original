@@ -404,6 +404,9 @@ label {
                 border-radius:10px;
                 border:3px solid white;
                 box-sizing:border-box;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
             
             label:hover {
@@ -412,6 +415,8 @@ label {
                 border-radius:10px;
                 border:3px solid white;
                 box-sizing:border-box;
+                text-overflow: initial;
+                white-space: normal;
             }
             
             input[type=checkbox] {
@@ -423,7 +428,17 @@ label {
                 background-color:white !important;
                 // border-radius: 5vh;
                 border-color:black;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
+        }
+        p {
+            font-size:0.9em;
+            margin:0px;
+            text-overflow: inherit;
+            white-space: inherit;
+            overflow: inherit;
         }
     }
 }
