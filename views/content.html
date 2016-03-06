@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hackstarter!</title>
+	<title>gitStarted</title>
+    <link rel="icon" href="pictures/icon.ico">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="main.css" />
     <link href='https://fonts.googleapis.com/css?family=Oswald:400,300|Rancho' rel='stylesheet' type='text/css'>
@@ -9,21 +10,21 @@
 <body>
 	<div class="background-image"></div>
 	<div class="user_image">
-		<a href="{{github_profile_url}}"><img src="{{avatar_url}}"></a>
+		<a href="{{github_profile_url}}" target="_blank"><img src="{{avatar_url}}"></a>
 	</div>
 	<div class="titlePage">
         <div>
             <center><img class="headerTitle" src="pictures/logo.png"/></center>
         </div>
         <div class="changingDiv">
-        	<h2>Hello {{name}}</h2>
             <center>
+                <h2 style = "padding-top:5vh" class = "description-text">Hello {{name}}! Let's get your repository set up.</h2>
                 <h2 class="loginTitle">Setup Repository</h2>
                  <form class="gitrepo_field" method="post" action="/modules">
                     <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
                     <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
                      <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
-                    <!-- <input id="submit_image_button" class="submitButton" type="submit" value="Submit"> -->
+                  
                      
                      <center>
                         <h1 class="loginTitle">Front End</h1>
@@ -35,12 +36,12 @@
                      <input type="radio" name="dev" value="Gulp" id="radio_gulp" checked="checked">
                      <label for="radio_gulp"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
                      <input type="radio" name="dev" value="Grunt" id="radio_grunt"><label for="radio_grunt"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
-                     <input type="radio" name="dev" value="None" id="radio_none"><label for="radio_none"><span></span>Neither</label><br>
+                     <input type="radio" name="dev" value="None" id="radio_none"><label for="radio_none"><span></span>Neither<img src="pictures/Sad.png" class="smallLogo"/></label><br>
                      <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename">
                      <!-- <input id="submit_image_button" class="submitButton" type="submit" value="Submit"> -->
                 </form>
-            </center>
-					<h2>Choose which modules you want</h2>
+            	</center>
+					<h2 class="description-text">Choose which modules you want</h2>
                     <ul>
                     	{{#node_modules}}
 						<li class="popular_modules"><label for="{{name}}"><input type="checkbox" id="{{name}}" name="modules" value="{{name}}?{{version}}"/><a target="_blank" href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
@@ -50,8 +51,6 @@
 				<form method="post" id="search_modules_form"  action="/searchModules">
 						<input type="text" id="search_modules_input" name="searchModules">
 						<button type="submit">Search</button>
-					</form>
-
 					<div id="search_module_results">
 						
 					</div>
@@ -60,7 +59,7 @@
 				</form>
 				<form method="post" id="make-it-happen-form" action="/gitStarted">
 					<input type="hidden" name="message" value="hello!">
-					<button id="make-it-all-happen" type="submit">MAKE IT HAPPEN!</button>
+					<button class="submitButton" id="make-it-all-happen" type="submit">MAKE IT HAPPEN!</button>
 				</form>
             </center>
         </div>
