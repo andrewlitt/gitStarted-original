@@ -97,7 +97,7 @@ var Helper = function () {
     this.gulpMid = `',\n\t\text: 'js'\n\t}).on('restart', function(){\n\t\t// when the app has restarted, run livereload.\n\t\tgulp.src('`;
     this.gulpEnd = `')\n\t\t\t.pipe(livereload())\n\t\t\t.pipe(notify('Reloading page, please wait...'));\n\t})\n})`;
     
-    this.htmlStart = `<!DOCTYPE html><html><head><title>`;
+    this.htmlStart = '<!DOCTYPE html><html><head><title>';
 
     this.htmlEndWBootstrap = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
     
@@ -108,12 +108,15 @@ var Helper = function () {
         github.startGithub(data.gitUsername, data.gitPassword);
         this.generateServerFile(data.serverName, data.dependencies);
         this.generatePackage(data.gitProjectName, data.gitUsername, data.serverName, data.dependencies);
-        if(data.nodeManager.name == 'gulp') {
+        console.log('NODE MANAGER');
+        console.log(data);
+        console.log(data.nodeManager);
+        if(data.nodeManager == 'gulp') {
             this.generateGulp(data.serverName);
-        } else if(data.nodeManager.name == 'grunt') {
+        } else if(data.nodeManager == 'grunt') {
             this.generateGrunt();
         }
-        this.generateREADME(data.gitProjectName, data.gitProjectDesc, data.nodeManager.name);
+        this.generateREADME(data.gitProjectName, data.gitProjectDesc, data.nodeManager);
         this.generateHTML(data);
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
@@ -176,14 +179,21 @@ var Helper = function () {
         }
         if(data.frontEnd.bootstrap) {
             // add Bootstrap
-            bootstrap = `\n<!-- Latest compiled and minified CSS -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n\n<!-- Optional theme -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">\n\n<!-- Latest compiled and minified JavaScript -->\n<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>\n`;
+            bootstrap = '\n<!-- Latest compiled and minified CSS -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n\n<!-- Optional theme -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">\n\n<!-- Latest compiled and minified JavaScript -->\n<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>\n';
         }
         if(data.frontEnd.fontAwesome) {
             // add FontAwesome
             fontAwesome = '\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">\n';
         }
-        this.projectData[3].children[0].contents = this.htmlStart + data.gitProjectName + `</title>` + jQuery + fontAwesome + bootstrap + data.frontEnd.bootstrap ? this.htmlEndWBootstrap : this.htmlEnd;
-        // console.log(this.projectData[3][0].contents);
+        var newContent = '';
+        newContent += this.htmlStart;
+        newContent += data.gitProjectName;
+        newContent += jQuery;
+        newContent += fontAwesome;
+        newContent += bootstrap;
+        newContent += data.frontEnd.bootstrap ? this.htmlEndWBootstrap : this.htmlEnd;
+
+        this.projectData[3].children[0].contents = newContent;
     }
 }
 
@@ -195,11 +205,11 @@ function getPackageDependencies(dependencies) {
     var str = '';
     if(dependencies.length > 1) {
         for(var i = 0; i < dependencies.length - 1; i++) {
-            str += '\t\t"' + dependencies[i].name + '": "' + dependencies[i].version + '",\n';
+            str += '\t\t"' + dependencies[i].name + '": "' + dependencies[i].version.replace('v','') + '",\n';
         }
     }
     if(dependencies.length > 0)
-        str += '\t\t"' + dependencies[dependencies.length - 1].name + '": "' + dependencies[dependencies.length - 1].version + '"\n';
+        str += '\t\t"' + dependencies[dependencies.length - 1].name + '": "' + dependencies[dependencies.length - 1].version.replace('v','') + '"\n';
     return str;
 }
 

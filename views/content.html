@@ -158,10 +158,10 @@
 				if (tempModules.length > 0) {
 					for (var i = 0; i < tempModules.length; i++) {
 						var info = $(tempModules[i]).val();
-						info = info.split("?v");
+						info = info.split("?");
 						modules.push({
 							"name":info[0],
-							"version":info[1]
+							"version":info[1].substring(0)
 						});
 					}
 				}
