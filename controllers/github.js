@@ -1,5 +1,5 @@
 var github = require('octonode');
-var request = require('request');
+var githubAPI = require('github');
 
 var Ghub = function () {
     this.username = null;
@@ -21,7 +21,7 @@ var Ghub = function () {
         });
     }
 
-    this.createRepo = function (name, desc, files) {
+    this.createRepo = function (name, desc, files, collaborators) {
         var username = this.username;
         var password = this.password;
         var client = this.createClient(this.username, this.password);
@@ -32,21 +32,45 @@ var Ghub = function () {
             function (error, status, body, headers) {
                 console.log('create repo status: ' + status);
                 if (status == 201) {
-                    // Add files and collaborators
-                    //addCollaborator('ColinLMacLeod1')
-                    addFiles(name, files, username, password, files.length-1);
+                    addCollaborators(name, collaborators, username, password, collaborators.length - 1);
+                    addFiles(name, files, username, password, files.length - 1);
+                    // Tell the user valid repo
+                } else {
+                    // Tell the user invalid repo
                 }
             });
     }
 
-    function addCollaborator(collaborator) {
-        // TO DO
-        //        request.post('https://api.github.com/repos/' + this.username + '/' + this.repo + '/collaborators/' + collaborator, function(error, response, body) {
-        //            console.log(response);
-        //            if(!error) {
-        //                console.log('Add Collaborator:' + response.statusCode)
-        //            }
-        //        });
+    function addCollaborators(projectName, collaborators, username, password, count) {
+        console.log(count);
+        if (count < 0) {
+            return;
+        }
+        var gh = new githubAPI({
+            version: "3.0.0",
+            protocol: "https",
+            host: "api.github.com",
+            timeout: 5000
+        });
+
+        gh.authenticate({
+            type: 'basic',
+            username: username,
+            password: password
+        });
+
+        gh.repos.addCollaborator({
+            user: username,
+            repo: projectName,
+            collabuser: collaborators[count]
+        }, function (err, res) {
+            if (!err) {
+                console.log(res);
+                addFiles(projectName, collaborators, username, password, --count);
+            } else {
+                console.log(err);
+            }
+        });
     }
 
     function addFiles(repoName, files, username, password, count) {
@@ -60,10 +84,14 @@ var Ghub = function () {
         });
         var ghrepo = client.repo(username + '/' + repoName);
         ghrepo.createContents(files[count].path, 'Add ' + files[count].path + ' template.', files[count].contents, function (error, status, body, headers) {
-            console.log('body: ' + body + '\nstatus: ' + status);
-            addFiles(repoName, files, username, password, --count);
+            if (!error) {
+                console.log('body: ' + body + '\nstatus: ' + status);
+                addFiles(repoName, files, username, password, --count);
+            } else {
+                console.log(error);
+            }
         });
     }
 }
 
-module.exports = new Ghub()
+module.exports = new Ghub();
