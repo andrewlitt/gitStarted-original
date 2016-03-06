@@ -29,18 +29,16 @@
                      <center>
                         <h1 class="loginTitle">Front End</h1>
                             <form class="frontend_setup" method="post" action="frontendSetup">
-                     <input type="checkbox" name="JQuery" value="JQuery" id="check_jquery"/><label for="check_jquery"><span></span> JQuery <img src="pictures/jquery.png" class="smallLogo"/></label><br>
-                     <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check_bootstrap"/><label for="check_bootstrap"><span></span> Bootstrap<img src="pictures/boot.png" class="smallLogo"/></label><br>
-                     <input type="checkbox" name="Font Awesome" value="FA" id="check_fontawesome"/><label for="check_fontawesome"><span></span> Font Awesome <img src="pictures/FA.png" class="smallLogo"/></label><br>
-                        <h1 class="loginTitle">Back End</h1>
-                     <input type="radio" name="dev" value="Gulp" id="radio_gulp" checked="checked">
-                     <label for="radio_gulp"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
-                     <input type="radio" name="dev" value="Grunt" id="radio_grunt"><label for="radio_grunt"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
-                     <input type="radio" name="dev" value="None" id="radio_none"><label for="radio_none"><span></span>Neither<img src="pictures/Sad.png" class="smallLogo"/></label><br>
-                     <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename">
-                     <!-- <input id="submit_image_button" class="submitButton" type="submit" value="Submit"> -->
-                </form>
-            	</center>
+                                <input type="checkbox" name="JQuery" value="JQuery" id="check1"/><label for="check1"><span></span><a>JQuery </a><img src="pictures/jquery.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check2"/><label for="check2"><span></span> <a>Bootstrap</a><img src="pictures/boot.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="Font Awesome" value="FA" id="check3"/><label for="check3"><span></span><a> Font Awesome </a><img src="pictures/FA.png" class="smallLogo"/></label><br>
+                            <h1 class="loginTitle">Back End</h1>
+                                <input type="radio" name="dev" value="JQuery" id="radio1"><label for="radio1"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
+                                <input type="radio" name="dev" value="Bootstrap" id="radio2"><label for="radio2"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
+                                <input type="radio" name="dev" value="FA" id="radio3"><label for="radio3"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
+                            </form>
+                        </center>
+
 					<h2 class="description-text">Choose which modules you want</h2>
                     <ul>
                     	{{#node_modules}}
@@ -49,18 +47,20 @@
 					</ul>
 				</form>
 				<form method="post" id="search_modules_form"  action="/searchModules">
-						<input type="text" id="search_modules_input" name="searchModules">
+						<input class="password" type="text" id="search_modules_input" name="searchModules">
 						<button type="submit">Search</button>
 					<div id="search_module_results">
 						
 					</div>
 
-					<button type="submit">Do it</button>
+					
 				</form>
+                
 				<form method="post" id="make-it-happen-form" action="/gitStarted">
 					<input type="hidden" name="message" value="hello!">
 					<button class="submitButton" id="make-it-all-happen" type="submit">MAKE IT HAPPEN!</button>
 				</form>
+                
             </center>
         </div>
     </div>
