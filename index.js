@@ -62,6 +62,7 @@ var indexPage = require('./routes/main.js');
 var slackContent = require('./routes/slack.js');
 var content = require('./routes/content.js');
 var gitLogin = require('./routes/gitlogin.js');
+var finalPage = require('./routes/final.js');
 
 // Setting up the Routes
 app.use('/', sess, indexPage);
@@ -69,6 +70,7 @@ app.get('/slack', sess, slackContent);
 app.get('/GitLogin', sess, gitLogin)
 app.get('/github', sess, content);
 app.post('/searchModules', sess, content);
+app.get('/final', sess, finalPage);
 
 
 // Getting Post information
@@ -102,8 +104,14 @@ app.post('/gitStarted', function (req, res) {
 	data.gitUsername = req.session.client.token.username;
 	data.gitPassword = req.session.client.token.password;
 	console.log(data);
-	var gitLink = models.generateFiles(data);
-    var gitClone = gitLink + '.git';
+	models.generateFiles(data, function(url) {
+		if (url) {
+			req.session.gitClone = url;
+			res.redirect('/final');
+		} else {
+			res.redirect('/');
+		}
+	});
     
 });
 

@@ -19,9 +19,12 @@
             <center><img class="mainTitle" src="pictures/logo.png"/></center>
         </div>
         <div>
-            <p class="description-text">Thats it! Thanks for using gitStarted.<br><br>Here's a link to your repository:<br><textarea class="username" style="height: auto" id="repoURL" rows="1" cols="50"></textarea></p>
+            <p class="description-text">Thats it! Thanks for using gitStarted.<br><br>Here's a link to your repository:<br><textarea class="username" style="height: auto" id="repoURL" rows="1" cols="50">
+                {{gitCloneURL}}
+            </textarea></p>
         </div>
         <button id="copyBtn" class="copyButton">Copy To Clipboard</button>
+        <a href="{{gitCloneURL}}">or go directly.</a>
         </center>
     </div>
     <script>

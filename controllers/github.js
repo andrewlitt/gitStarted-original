@@ -66,7 +66,7 @@ var Ghub = function () {
         }, function (err, res) {
             if (!err) {
                 console.log(res);
-                addFiles(projectName, collaborators, username, password, --count);
+                addCollaborators(projectName, collaborators, username, password, --count);
             } else {
                 console.log(err);
             }
