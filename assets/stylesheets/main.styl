@@ -4,10 +4,6 @@
 }
 
 body {
-    background-image: url("pictures/mainsplash2.png");
-	background-size: 100vw 100vh;
-    background-repeat: no-repeat;
-	font-size:4vh;
     margin: 0;
 }
 
@@ -47,7 +43,7 @@ body {
 .description-text{
     font-family:'Myriad Pro';
     font-weight:300;
-    font-size: 15pt;
+    font-size: 18pt;
     color: white;
 }
 
@@ -73,10 +69,17 @@ body {
     height:80vh;
     background-color:FFE6E0;
     z-index:-100;
+    
+    h2 {
+        text-align: center;
+        color: white;
+        font-family: 'Oswald';
+        font-weight: 100;
+    }
 }
 
 .loginTitle {
-    margin-top: 10vh;
+    margin-top: 8vh;
     font-family: 'Oswald';
     font-size: 8vh;
     color: white;
@@ -85,7 +88,7 @@ body {
 .password {
     display: list-item;
     margin: 5vh;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.8);
     border-radius: 3vh;
     border-width: 1vh;
     border-color: #FFAC4C;
@@ -97,7 +100,7 @@ body {
 .username {
     display: list-item;
     margin-top: 5vh;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.8);
     border-radius: 3vh;
     border-width: 1vh;
     border-color: #FF724C;
@@ -106,7 +109,7 @@ body {
     width: 30vw;
 }
 .submitButton{
-    margin-top: 5vh;
+    margin-top: 5vh 0vh 50vh 0vh;
     background-color: rgba(255,255,255,0);
     border-radius: 5vh !important;
     border-width: 1vh;
@@ -132,3 +135,152 @@ body {
 input::-webkit-input-placeholder {
 color: rgba(0,0,0,0.7) !important;
 }
+
+.user_image {
+    position:absolute;
+    width:80px;
+    height:80px;
+    top:10px;
+    right:10px;
+    float:left;
+    a {
+        display:block;
+        width:80px;
+        height:80px;
+        border-radius:100px;
+        img {
+            height:80px;
+            width:80px;
+            border-radius:100px;
+        }
+    }
+    a:hover, a:focus, a:active {
+        
+    }
+}
+
+.background-image {
+    background-image: url("pictures/mainsplash2.png");
+    background-size:100%;
+    height:100%;
+    width:100%;
+    z-index:-1;
+    position:fixed;
+}
+
+form.gitrepo_field {
+}
+
+ul {
+    padding:0px;
+    list-style:none;
+    margin-top:50px;
+    
+    li.popular_modules {
+        display:inline-block;
+        width:33.3333333%;
+        float:left;
+        height:75px;
+        background-color:#CCCCCC;
+        border:1px solid #000000;
+        box-sizing:border-box;
+        
+        position:relative;
+
+        label {
+            width:100%;
+            height:100%;
+            display:block;
+        }
+        
+        label:hover {
+            background-color:#DCDCDC;
+            cursor:pointer;
+        }
+        
+        label.added-module {
+            background-color:white;
+        }
+
+        a {
+            width:auto;
+            height:30px;
+            line-height:30px;
+            text-decoration:none;
+            color:#000000;
+            font-size:1.3em;
+            text-align:center;
+        }
+        
+        input[type=checkbox] {
+            position: absolute;
+            top:0;
+            left:-10000px;
+            height:30px;
+        }
+        
+        p {
+            margin:0px;
+        }
+    }
+    
+    li.popular_modules:nth-child(3)::after {
+        content:"";
+        display:block;
+    }
+    li.popular_modules:hover {
+        background-color:#DCDCDC;
+    }
+}
+
+
+
+
+.frontend_setup {
+    font-size:4vh;
+    font-family:'Myriad Pro';
+}
+.smallLogo{
+    height: 6vh;
+    margin-bottom:-1vh;
+}
+
+
+/* Check Boxes */
+
+input[type="checkbox"]{
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
+    border-radius: 2vh;
+    margin-right: 0.5vw;
+    background:url(pictures/uncheck1.png);
+    background-size:contain;
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+    background:url(pictures/check1.png);
+    background-size:contain;
+}
+
+input[type="radio"]{
+    display:none;
+}
+input[type="radio"] + label span {
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
+    border-radius: 0vh;
+    margin-right: 0.5vw;
+    background:url(pictures/offradio.png);
+    background-size:contain;
+    cursor:pointer;
+}
+input[type="radio"]:checked + label span {
+    background:url(pictures/onradio.png);
+    background-size:contain;
+}
+

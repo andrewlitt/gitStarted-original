@@ -30,9 +30,15 @@ app.use(stylus.middleware({
 }));
 
 app.use(express.static('public'));
+
 var sess = session({
     secret: 'gitslacking',
-	cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 Hours
+	cookie: { 
+		maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+		httpOnly: true,
+    	secure: false
+	},
+	rolling: true
 });
 
 // Setting up the session
@@ -44,6 +50,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(function (req, res, next) {
+    if ('HEAD' == req.method || 'OPTIONS' == req.method) return next();
     res.locals.session = req.session;
     next();
 });
@@ -53,16 +60,18 @@ app.use(function (req, res, next) {
 var indexPage = require('./routes/main.js');
 var slackContent = require('./routes/slack.js');
 var content = require('./routes/content.js');
+var gitLogin = require('./routes/gitlogin.js');
 
 // Setting up the Routes
 app.use('/', sess, indexPage);
 app.get('/slack', sess, slackContent);
+app.get('/GitLogin', sess, gitLogin)
 app.get('/github', sess, content);
 app.post('/searchModules', sess, content);
 
 
 // Getting Post information
-app.post('/github', function (req, res) {
+app.post('/githubLogin', function (req, res) {
 
     if (req.body.git_user == 'undefined' || req.body.git_pass == 'undefined') {
         res.redirect('/');
@@ -84,9 +93,9 @@ app.post('/github', function (req, res) {
     }
 });
 
-app.post('/modules', function (req, res) {
-	console.log(req.body.modules);
-});	
+app.post('/gitStarted', function (req, res) {
+	console.log(req.body);
+});
 
 // app.post('/searchModules', function(req, res) {
 
