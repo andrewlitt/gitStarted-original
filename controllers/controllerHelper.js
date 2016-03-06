@@ -103,7 +103,7 @@ var Helper = function () {
     
     this.htmlEnd = `</head><body><div style="text-align:center; width:100%;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div><div ><div style="text-align:center; width:100%;"><h4>Thanks for making a repo through GitStarted</h4></div><div style="text-align:center; width:100%;"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></body></html>`;
 
-    this.generateFiles = function(data) {
+    this.generateFiles = function(data, callback) {
         console.log('HERE!');
         github.startGithub(data.gitUsername, data.gitPassword);
         this.generateServerFile(data.serverName, data.dependencies);
@@ -120,7 +120,7 @@ var Helper = function () {
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
         github.createRepo(data.gitProjectName, data.gitProjectDesc, files, data.collaborators);
-        return 'https://github.com/' + data.gitUsername + '/' + data.gitProjectName + '.git';
+        callback('https://github.com/' + data.gitUsername + '/' + data.gitProjectName);
     }
     
     this.scanFiles = function(root, repoName, desc){
