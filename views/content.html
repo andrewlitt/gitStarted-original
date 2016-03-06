@@ -61,6 +61,9 @@
                 
             </center>
         </div>
+        <form id="finalForm" method="post" action="/gitStarted">
+			
+        </form>
     </div>
 	<script>
 		$(document).ready(function() {
@@ -190,6 +193,19 @@
 				}
 
 				if (repoName && desc && serverJSFilename) {
+
+
+					// $('#finalForm').append('<input type="hidden" name="'+gitProjectName+'" value="'+repoName+'" />');
+					// for (var i in contributors) {
+					// 	$('#finalForm').append('<input type="hidden" name="contributors" value="'+contributors[i]+'" />');
+					// }
+					// $('#finalForm').append('<input type="hidden" name="'+gitProjectDesc+'" value="'+desc+'" />');
+					// for (var i in modules) {
+					// 	$('#finalForm').append('<input type="hidden" name="dependencies['+i+']" value="'+modules[i].name+'" />');
+					// 	$('#finalForm').append('<input type="hidden" name="dependencies['+i+'" value="'+modules[i].version+'" />');
+					// }
+
+
 					$.ajax({
 						url:'/gitStarted',
 						data:{
@@ -207,8 +223,6 @@
 							nodeManager:backend_helper
 						},
 						method:'post'
-					}).done(function(data) {
-						console.log(data);
 					});
 				}
 			});

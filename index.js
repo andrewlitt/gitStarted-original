@@ -104,6 +104,7 @@ app.post('/gitStarted', function (req, res) {
 	data.gitUsername = req.session.client.token.username;
 	data.gitPassword = req.session.client.token.password;
 	models.generateFiles(data, function(url) {
+		console.log("DID YOU GO HERE");
 		if (url) {
 			req.session.gitClone = url;
 			res.redirect('/final');
