@@ -108,7 +108,7 @@ var Helper = function () {
         if(data.nodeManager == 'Gulp') {
             this.generateGulp(data.serverName);
         } else if(data.nodeManager == 'Grunt') {
-            this.generateGrunt()
+            this.generateGrunt();
         }
         this.generateREADME(data.gitProjectName, data.gitProjectDesc, data.nodeManager);
         this.generateHTML(data);
