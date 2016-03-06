@@ -102,8 +102,9 @@ app.post('/gitStarted', function (req, res) {
 	data.gitUsername = req.session.client.token.username;
 	data.gitPassword = req.session.client.token.password;
 	console.log(data);
-	models.generateFiles(data);
-
+	var gitLink = models.generateFiles(data);
+    var gitClone = gitLink + '.git';
+    
 });
 
 // app.post('/searchModules', function(req, res) {
