@@ -9,8 +9,8 @@ var Handlebars = require('handlebars');
 
 
 // Controllers
-var helper = require('./controllers/controllerHelper.js');
-var github = require('./controllers/github.js');
+var models = require('./controllers/controllerHelper.js');
+var github = require('./controllers/github.js')
 
 // Creating the Web Server
 var app = express();
@@ -79,6 +79,7 @@ app.post('/githubLogin', function (req, res) {
         var username = req.body.git_user,
             password = req.body.git_pass;
         github.startGithub(username, password);
+        var client = github.createClient();
         req.session.client = client;
         req.session.clientAvatarURL = client.avatar_url;
         client.get('/user', {}, function (err, status, body, headers) {
@@ -100,27 +101,6 @@ app.post('/gitStarted', function (req, res) {
 // app.post('/searchModules', function(req, res) {
 
 // });
-
-app.get('/helper', function(req, res) {
-    var link = helper.generateFiles({
-        serverName: 'index.js',
-        dependencies: [
-            {
-                name: 'gulp',
-                version: '1.4.2'
-            },
-            {
-                name: 'chalk',
-                version: '0.2.5'
-            }
-        ],
-        gitProjectName: 'Test',
-        gitUsername: 'zackharley',
-        gitPassword: 'Cornwall1',
-        gitProjectDesc: 'This is a testy test'
-    });
-    console.log(link);
-});
 
 var server = app.listen(3000, function () {
 
