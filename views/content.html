@@ -21,9 +21,9 @@
                 <h2 style = "padding-top:5vh" class = "description-text">Hello {{name}}! Let's get your repository set up.</h2>
                 <h1 class="loginTitle">Setup Repository</h1>
                  <form class="gitrepo_field" method="post" action="/modules">
-                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
-                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)">
-                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
+                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name" required>
+                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)" required>
+                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description" required>
                      <center>
                         <h1 class="loginTitle">Front End</h1>
                             <form class="frontend_setup" method="post" action="frontendSetup">
@@ -35,7 +35,7 @@
                                 <input type="radio" name="dev" value="Bootstrap" id="radio_grunt"><label class="description-text" for="radio_grunt"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
                                 <input type="radio" name="dev" value="FA" id="radio_none"><label class="description-text" for="radio_none"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
                                 <h2 class="description-text">Name your server:</h2>
-                                <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename">
+                                <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename" required>
                             </form>
                         </center>
 
@@ -204,15 +204,15 @@
 
 				if (backend_helper != null) {
 					var exists = false;
-					if (backend_helper == "Grunt") {
+					if (backend_helper == "grunt") {
 						for (var i = 0; i < modules.length; i++) {
-							if (modules[i]["name"] == "Grunt") {
+							if (modules[i]["name"] == "grunt") {
 								exists = true;
 							}
 						}
 					} else {
 						for (var i = 0; i < modules.length; i++) {
-							if (modules[i]["name"] == "Gulp") {
+							if (modules[i]["name"] == "gulp") {
 								exists = true;
 							}
 						}
@@ -221,6 +221,20 @@
 						modules.push({
 							"name":backend_helper,
 							"version":$('#'+backend_helper).val().split("?")[1]
+						});
+					}
+					if (backend_helper == "gulp") {
+						modules.push({
+							"name":"gulp-livereload",
+							"version":"v3.8.1"
+						});
+						modules.push({
+							"name":"gulp-nodemon",
+							"version":"v2.0.6"
+						});
+						modules.push({
+							"name":"gulp-notify",
+							"version":"v2.2.0"
 						});
 					}
 				}
