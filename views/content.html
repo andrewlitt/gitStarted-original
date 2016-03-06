@@ -30,7 +30,7 @@
                      <center>
                         <h1 class="loginTitle">Front End</h1>
                             <form class="frontend_setup" method="post" action="frontendSetup">
-                                <input type="checkbox" name="JQuery" value="JQuery" id="check1"/><label for="check1"><span></span> JQuery <img src="pictures/jquery.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="JQuery" value="JQuery" id="check1"/><label for="check1"><span></span>JQuery <img src="pictures/jquery.png" class="smallLogo"/></label><br>
                                 <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check2"/><label for="check2"><span></span> Bootstrap<img src="pictures/boot.png" class="smallLogo"/></label><br>
                                 <input type="checkbox" name="Font Awesome" value="FA" id="check3"/><label for="check3"><span></span> Font Awesome <img src="pictures/FA.png" class="smallLogo"/></label><br>
                             <h1 class="loginTitle">Back End</h1>
@@ -47,19 +47,21 @@
 					</ul>
 				</form>
 				<form method="post" id="search_modules_form"  action="/searchModules">
-						<input type="text" id="search_modules_input" name="searchModules">
+						<input class="password" type="text" id="search_modules_input" name="searchModules">
 						<button type="submit">Search</button>
 					
 					<div id="search_module_results">
 						
 					</div>
 
-					<button type="submit">Do it</button>
+					
 				</form>
+                
 				<form method="post" id="make-it-happen-form" action="/gitStarted">
 					<input type="hidden" name="message" value="hello!">
 					<button class="submitButton" id="make-it-all-happen" type="submit">MAKE IT HAPPEN!</button>
 				</form>
+                
             </center>
         </div>
     </div>

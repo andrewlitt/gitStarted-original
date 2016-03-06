@@ -102,7 +102,7 @@ body {
     width: 30vw;
 }
 .submitButton{
-    margin-top: 5vh 0vh 50vh 0vh;
+    margin: 10vh 0vh 10vh 0vh;
     background-color: rgba(255,255,255,0);
     border-radius: 5vh !important;
     border-width: 1vh;
@@ -113,8 +113,13 @@ body {
     font-family: 'Oswald';
     font-size:5vh;
     color: white;
+    display: block;
 }
 #submit_image_button:hover {
+    opacity: 0.7;
+}
+
+#make-it-all-happen:hover {
     opacity: 0.7;
 }
 
@@ -171,7 +176,8 @@ ul {
     
     li.popular_modules {
         display:inline-block;
-        width:33.3333333%;
+        width:30%;
+        margin:1%;
         float:left;
         height:75px;
         background-color:#CCCCCC;
@@ -179,6 +185,10 @@ ul {
         box-sizing:border-box;
         
         position:relative;
+        border-radius: 5vh !important;
+        border-width: 1vh;
+        border-color: rgba(255,255,255,1);
+        background-color:rgba(255,255,255,0.8);
 
         label {
             width:100%;
@@ -187,12 +197,14 @@ ul {
         }
         
         label:hover {
-            background-color:#DCDCDC;
+            background-color:rgba(255,255,255,1);
+            border-radius: 5vh !important;
             cursor:pointer;
         }
         
         label.added-module {
             background-color:white;
+            border-radius: 5vh !important;
         }
 
         a {
@@ -224,19 +236,86 @@ ul {
     li.popular_modules:hover {
         background-color:#DCDCDC;
     }
+    li.popular_modules {
+            background-color:#DCDCDC;
+    }
+    li.popular_modules:nth-child(3n) {
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 3vh;
+        border-width: 1vh;
+        border-color: #FF724C;;
+    }
+    li.popular_modules:nth-child(3n-2) {
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 3vh;
+        border-width: 1vh;
+        border-color: #FFAC4C;
+    }
+    li.search_result_list_item:nth-child(3)::after {
+            content:"";
+            display:block;
+    }
+    li.search_result_list_item:hover {
+            background-color:#DCDCDC;
+    }
 }
 
 
+ /*ul {    
+        li.search_result_list_item {
+            background-color:#DCDCDC;
+        }
+        li.search_result_list_item:nth-child(3)::after {
+            content:"";
+            display:block;
+        }
+        li.search_result_list_item:hover {
+            background-color:#DCDCDC;
+        }
+    }
+*/
+label {
+    font-family:'Myriad Pro';
+    /*font-size: 5vh; */
+}
 
 
 .frontend_setup {
-    font-size:4vh;
-    font-family:'Myriad Pro';
+
 }
 .smallLogo{
     height: 6vh;
     margin-bottom:-1vh;
 }
+
+/* Search Result */
+#search_result_list_item {
+    display:inline-block;
+    width:33.3333333%;
+    float:left;
+    height:75px;
+    background-color:#CCCCCC;
+    border:1px solid #000000;
+    box-sizing:border-box;
+        
+    position:relative;
+    border-radius: 5vh !important;
+    border-width: 1vh;
+    border-color: rgba(255,255,255,1);
+    background-color:rgba(255,255,255,0.8); 
+}
+#search_result_list_item:nth-child(3n) {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 3vh;
+    border-width: 1vh;
+    border-color: #FF724C;;
+    }
+#search_result_list_item:nth-child(3n-2) {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 3vh;
+    border-width: 1vh;
+    border-color: #FFAC4C;
+    }
 
 
 /* Check Boxes */
