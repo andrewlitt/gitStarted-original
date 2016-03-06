@@ -101,7 +101,7 @@ app.post('/gitStarted', function (req, res) {
 	var data = req.body;
 	data.gitUsername = req.session.client.token.username;
 	data.gitPassword = req.session.client.token.password;
-	console.log(data);
+	// console.log(data);
 	models.generateFiles(data);
 
 });

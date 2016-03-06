@@ -109,7 +109,6 @@ var Helper = function () {
         this.generateServerFile(data.serverName, data.dependencies);
         this.generatePackage(data.gitProjectName, data.gitUsername, data.serverName, data.dependencies);
         console.log('NODE MANAGER');
-        console.log(data);
         console.log(data.nodeManager);
         if(data.nodeManager == 'gulp') {
             this.generateGulp(data.serverName);

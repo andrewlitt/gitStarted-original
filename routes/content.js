@@ -17,7 +17,7 @@ module.exports = (function() {
     				  username: username,
     				  password: password
     				});
-            console.log(req.session);
+            // console.log(req.session);
         	client.get('/user/repos', {}, function (err, status, body, headers) {
         		fs.readFile(path.join(__dirname + '/../views/content.html'), 'utf-8', function(err, data) {
         			var template = Handlebars.compile(data);
