@@ -1,7 +1,5 @@
-<div>
-	<ul>
-		{{#search_modules}}
-		<li id='search_result_list_item' data-name="{{name}}"><input type="checkbox"/><a href="http://npmjs.com{{url}}">{{name}}</a></li>
-		{{/search_modules}}
-	</ul>
-</div>
+<ul>
+	{{#search_modules}}
+	<li id='search_result_list_item' data-name="{{name}}"><label for="{{name}}"><input type="checkbox" value="{{name}}?{{version}}" id="{{name}}" name="modules"/><a target="_blank" href="http://npmjs.com{{url}}">{{name}}</a></label></li>
+	{{/search_modules}}
+</ul>

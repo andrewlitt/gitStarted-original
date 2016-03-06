@@ -80,7 +80,6 @@ app.post('/githubLogin', function (req, res) {
             password = req.body.git_pass;
         github.startGithub(username, password);
         var client = github.createClient();
-        github.createRepo('Test', 'this is a test repo');
         req.session.client = client;
         req.session.clientAvatarURL = client.avatar_url;
         client.get('/user', {}, function (err, status, body, headers) {

@@ -17,13 +17,12 @@
             <center><img class="headerTitle" src="pictures/logo.png"/></center>
         </div>
         <div class="changingDiv">
-        	
             <center>
-                <h2 style = "padding-top:5vh" class = "description-text">Hello {{username}}! Let's get your repository set up.</h2>
+                <h2 style = "padding-top:5vh" class = "description-text">Hello {{name}}! Let's get your repository set up.</h2>
                 <h2 class="loginTitle">Setup Repository</h2>
                  <form class="gitrepo_field" method="post" action="/modules">
-                    <input id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
-                    <input id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
+                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
+                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
                      <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
                   
                      
@@ -39,6 +38,7 @@
                                 <input type="radio" name="dev" value="FA" id="radio3"><label for="radio3"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
                             </form>
                         </center>
+
 					<h2 class="description-text">Choose which modules you want</h2>
                     <ul>
                     	{{#node_modules}}
@@ -49,7 +49,6 @@
 				<form method="post" id="search_modules_form"  action="/searchModules">
 						<input class="password" type="text" id="search_modules_input" name="searchModules">
 						<button type="submit">Search</button>
-					
 					<div id="search_module_results">
 						
 					</div>
@@ -94,6 +93,22 @@
 				});
 			});
 			
+			$('input[type=text]').each( function() {
+				$(this).bind('input', function(e) {
+					if ($(this).val().indexOf(' ') != -1) {
+						$(this).val($(this).val().replace(' ', '-'));
+					}
+					if ($(this).attr('id') == "server_js_filename") {
+						if (!$(this).val().match('.js$')) {
+							$(this).val($(this).val()+'.js');
+							setCaretToPos($(this)[0], $(this).val().length-3);
+						} else {
+							setCaretToPos($(this)[0], $(this).val().length-3);
+						}
+					}
+				});
+			});
+
 			$('li.popular_modules > label').each(function() {
 				$(this).bind('click', function(e) {
 					e.stopPropagation();
@@ -111,6 +126,15 @@
 				var contributors = $('#git_contributors').val();
 				var desc = $('#git_description').val();
 				var tempModules = $('li.popular_modules > label > input[type=checkbox]:checked');
+				var serverJSFilename = $('#server_js_filename').val();
+				var jquery = $('#check_jquery').is(':checked') ? true : false;
+				var bootstrap = $('#check_bootstrap').is(':checked') ? true : false;
+				var fontAwesome = $('#check_fontawesome').is(':checked') ? true : false;
+				var grunt = $('#radio_grunt').is(':checked') ? true : false;
+				var gulp = $('#radio_gulp').is(':checked') ? true : false;
+				var none = $('#radio_none').is(':checked') ? true : false;
+				var backend_helper = grunt == true ? "Grunt" : gulp == true ? "Gulp" : null;
+
 				var modules = [];
 				console.log(tempModules);
 				if (tempModules.length > 0) {
@@ -123,31 +147,57 @@
 						});
 					}
 				}
-				$.ajax({
-					url:'/gitStarted',
-					data:{
-						repoName:repoName,
-						contributors:contributors,
-						desc:desc,
-						modules:modules
-					},
-					method:'post'
-				}).done(function(data) {
-					console.log(data);
-					if (data) {
-						$search_modules_results.html(data);
-						$('#search_result_list_item > input').on('change', function() {
-							if (this.checked) {
-								// console.log("You want this one.");
-								$(this.parentNode).addClass("added-module");
-							} else {
-								$(this.parentNode).removeClass("added-module");
-							}
-						});
-					}
-				});
+				if (repoName && desc && serverJSFilename) {
+					$.ajax({
+						url:'/gitStarted',
+						data:{
+							gitProjectName:repoName,
+							contributors:contributors,
+							gitProjectDesc:desc,
+							dependencies:modules,
+							serverName:serverJSFilename,
+							frontEnd: {
+								jquery:jquery,
+								boostrap:bootstrap,
+								fontAwesome:fontAwesome
+							},
+							nodeManager:backend_helper
+						},
+						method:'post'
+					}).done(function(data) {
+						console.log(data);
+						if (data) {
+							$search_modules_results.html(data);
+							$('#search_result_list_item > input').on('change', function() {
+								if (this.checked) {
+									// console.log("You want this one.");
+									$(this.parentNode).addClass("added-module");
+								} else {
+									$(this.parentNode).removeClass("added-module");
+								}
+							});
+						}
+					});
+				}
 			});
 		});
+		function setSelectionRange(input, selectionStart, selectionEnd) {
+		  if (input.setSelectionRange) {
+		    input.focus();
+		    input.setSelectionRange(selectionStart, selectionEnd);
+		  }
+		  else if (input.createTextRange) {
+		    var range = input.createTextRange();
+		    range.collapse(true);
+		    range.moveEnd('character', selectionEnd);
+		    range.moveStart('character', selectionStart);
+		    range.select();
+		  }
+		}
+
+		function setCaretToPos (input, pos) {
+		  setSelectionRange(input, pos, pos);
+		}
 	</script>
 </body>
 </html>
