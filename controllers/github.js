@@ -94,4 +94,4 @@ var Ghub = function () {
     }
 }
 
-module.exports = new Ghub()module.exports = new Ghub();
+module.exports = new Ghub();
