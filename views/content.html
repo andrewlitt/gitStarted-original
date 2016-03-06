@@ -28,7 +28,7 @@
 					<h2>Choose which modules you want</h2>
                     <ul>
                     	{{#node_modules}}
-						<li class="popular_modules"><label for="modules"><input type="checkbox" id="modules" name="modules" value="{{name}}"/><a href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
+						<li class="popular_modules"><label for="{{name}}"><input type="checkbox" id="{{name}}" name="modules" value="{{name}}?{{version}}"/><a target="_blank" href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
 						{{/node_modules}}
 					</ul>
 	
@@ -64,10 +64,24 @@
 					if (data) {
 						$search_modules_results.html(data);
 						$('#search_result_list_item > input').on('change', function() {
-							if (this.prop(':checked') == true) {
-								console.log("You want this one.");
+							if (this.checked) {
+								// console.log("You want this one.");
+								$(this.parentNode).addClass("added-module");
+							} else {
+								$(this.parentNode).removeClass("added-module");
 							}
 						});
+					}
+				});
+			});
+			
+			$('li.popular_modules > label').each(function() {
+				$(this).bind('click', function(e) {
+					e.stopPropagation();
+					if ($(this).find('input').is(':checked')) {
+						$(this).addClass("added-module");
+					} else {
+						$(this).removeClass("added-module");
 					}
 				});
 			});
