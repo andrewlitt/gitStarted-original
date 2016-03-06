@@ -61,8 +61,8 @@ var Helper = function () {
         },
         {
             'type': 'file',
-            'name': 'gulpfile.js',
-            'path': 'gulpfile.js',
+            'name': 'manager.js',
+            'path': 'mnanger.js',
             'contents': ''
         },
         {
@@ -97,12 +97,21 @@ var Helper = function () {
     this.gulpMid = `',\n\t\text: 'js'\n\t}).on('restart', function(){\n\t\t// when the app has restarted, run livereload.\n\t\tgulp.src('`;
     this.gulpEnd = `')\n\t\t\t.pipe(livereload())\n\t\t\t.pipe(notify('Reloading page, please wait...'));\n\t})\n})`;
     
+    this.htmlStart = `<!DOCTYPE html><html><head><title>`;
+
+    this.htmlEnd = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
+    
     this.generateFiles = function(data) {
         github.startGithub(data.gitUsername, data.gitPassword);
         this.generateServerFile(data.serverName, data.dependencies);
         this.generatePackage(data.gitProjectName, data.gitUsername, data.serverName, data.dependencies);
-        this.generateGulp(data.serverName);
-        this.generateREADME(data.gitProjectName, data.gitProjectDesc);
+        if(data.nodeManager == 'Gulp') {
+            this.generateGulp(data.serverName);
+        } else if(data.nodeManager == 'Grunt') {
+            this.generateGrunt()
+        }
+        this.generateREADME(data.gitProjectName, data.gitProjectDesc, data.nodeManager);
+        this.generateHtmlTML(data);
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
         github.createRepo(data.gitProjectName, data.gitProjectDesc, files);
@@ -141,17 +150,39 @@ var Helper = function () {
     }
     
     this.generateGulp = function(serverFile) {
+        this.projectData[5].name = 'gulpfile.js';
+        this.projectData[5].path = 'gulpfile.js';
         this.projectData[5].contents = this.gulpStart + serverFile + this.gulpMid + serverFile + this.gulpEnd;
     }
     
-    this.generateREADME = function(projectName, description) {
-        this.projectData[9].contents = `#` + projectName + `\n\n` + description + `\n\n## Installation\n\n` + 
-            // Extra README instructions plus add link for GitStarted
-        `To install:\n\`\`\`\nnpm install\n\`\`\`\n\n## Usage\n\nTo run:\n\`\`\`\ngulp\n\`\`\`\n\n## Contributing\n\n1. Fork it!\n2. Create your feature branch: \`git checkout -b my-new-feature\`\n3. Commit your changes: \`git commit -am 'Add some feature'\\n4. Push to the branch: \`git push origin my-new-feature\`\n5. Submit a pull request :D\n\n## Credits\n\nMade with :heart: using [GitStarted]()\n\n## License\n` + this.projectData[8].contents;
+    this.generateGrunt = function() {
+        this.projectData[5].name = 'Gruntfile.js';
+        this.projectData[5].path = 'Gruntfile.js';
+        this.projectData[5].contents = '';
     }
     
-    this.generateHTML = function(frontEnd) {
-        
+    this.generateREADME = function(projectName, description, manager) {
+        this.projectData[9].contents = `#` + projectName + `\n\n` + description + `\n\n## Installation\n\n` + 
+            // Extra README instructions plus add link for GitStarted
+        `To install:\n\`\`\`\nnpm install\n\`\`\`\n\n## Usage\n\nTo run:\n\`\`\`\n` + manager + `\n\`\`\`\n\n## Contributing\n\n1. Fork it!\n2. Create your feature branch: \`git checkout -b my-new-feature\`\n3. Commit your changes: \`git commit -am 'Add some feature'\\n4. Push to the branch: \`git push origin my-new-feature\`\n5. Submit a pull request :D\n\n## Credits\n\nMade with :heart: using [GitStarted]()\n\n## License\n` + this.projectData[8].contents;
+    }
+    
+    this.generateHTML = function(data) {
+        var jQuery = '', bootstrap = '', fontAwesome = '';
+        if(data.frontEnd.JQuery) {
+            // add jQuery
+            jQuery = '\n<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>\n';
+        }
+        if(data.frontEnd.Bootstrap) {
+            // add Bootstrap
+            bootstrap = `\n<!-- Latest compiled and minified CSS -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n\n<!-- Optional theme -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">\n\n<!-- Latest compiled and minified JavaScript -->\n<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>\n`;
+        }
+        if(data.frontEnd.FA) {
+            // add FontAwesome
+            fontAwesome = '\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">\n';
+        }
+        this.projectData[3][0].contents = this.htmlStart + data.gitProjectName + `</title>` + jQuery + fontAwesome + bootstrap + this.htmlEnd;
+        console.log(this.projectData[3][0].contents);
     }
 }
 

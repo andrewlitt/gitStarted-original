@@ -32,9 +32,11 @@ var Ghub = function () {
             function (error, status, body, headers) {
                 console.log('create repo status: ' + status);
                 if (status == 201) {
-                    // Add files and collaborators
-                    //addCollaborator('ColinLMacLeod1')
+                    // Add collaborators
                     addFiles(name, files, username, password, files.length-1);
+                    // Tell the user valid repo
+                } else {
+                    // Tell the user invalid repo
                 }
             });
     }
