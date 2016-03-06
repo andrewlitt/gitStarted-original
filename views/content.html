@@ -62,12 +62,44 @@
                 
             </center>
         </div>
-        <form id="finalForm" method="post" action="/gitStarted">
+        <div id="popup_form" class="popup_form disabled">
+			<div class="center_popup_form">
+				 <div class="titlePage">
+				 	<a id="close_popup">Close</a>
+			        <center>
+			        <div class="important_popup">
+			            <p id="popup_git_clone" class="description-text">Thats it! Thanks for using gitStarted.<br><br>Here's a link to your repository:<br><textarea class="username" style="height: auto" id="repoURL" rows="1" cols="50">
+			                
+			            </textarea></p>
+			            <button id="copyBtn" class="copyButton">Copy To Clipboard</button>
+			        	<a id='goDirectlyToRepo' href="{{gitCloneURL}}">or go directly.</a>
+			        </div>
+			        </center>
+			    </div>
+			    <script>
+			    var copyBtn = document.querySelector('#copyBtn');
+			        copyBtn.addEventListener('click',function(){
+			            var repoURL = $('#repoURL');
+			            repoURL.select();
+			            document.execCommand('copy');
+			            repoURL.deselect();
+			        }, false);
+
+			    </script>
+			</div>
+        </div>
+        <!-- <form id="finalForm" method="post" action="/gitStarted">
 			
-        </form>
+        </form> -->
     </div>
 	<script>
 		$(document).ready(function() {
+
+			$('#close_popup').on('click', function(e) {
+				e.preventDefault();
+				$(this.parentNode.parentNode.parentNode).addClass('disabled');
+			});
+
 			var $search_modules_results = $("#search_module_results");
 			var $search_modules_form = $("#search_modules_form");
 			console.log($('#search_modules_input').val());
@@ -224,10 +256,19 @@
 							nodeManager:backend_helper
 						},
 						method:'post'
+					}).done(function (data) {
+						createPopup(data);
 					});
 				}
 			});
 		});
+
+		function createPopup(data) {
+			$('#popup_git_clone > textarea').val(data.gitCloneURL);
+			$('#goDirectlyToRepo').attr('href', data.gitCloneURL);
+			$('#popup_form').removeClass('disabled');
+		}
+
 		function setSelectionRange(input, selectionStart, selectionEnd) {
 		  if (input.setSelectionRange) {
 		    input.focus();
