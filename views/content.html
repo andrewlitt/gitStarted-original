@@ -17,8 +17,9 @@
             <center><img class="headerTitle" src="pictures/logo.png"/></center>
         </div>
         <div class="changingDiv">
-        	<h2>Hello {{username}}</h2>
+        	
             <center>
+                <h2 style = "padding-top:5vh" class = "description-text">Hello {{username}}! Let's get your repository set up.</h2>
                 <h2 class="loginTitle">Setup Repository</h2>
                  <form class="gitrepo_field" method="post" action="/modules">
                     <input id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
@@ -38,7 +39,7 @@
                                 <input type="radio" name="dev" value="FA" id="radio3"><label for="radio3"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
                             </form>
                         </center>
-					<h2>Choose which modules you want</h2>
+					<h2 class="description-text">Choose which modules you want</h2>
                     <ul>
                     	{{#node_modules}}
 						<li class="popular_modules"><label for="{{name}}"><input type="checkbox" id="{{name}}" name="modules" value="{{name}}?{{version}}"/><a target="_blank" href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
