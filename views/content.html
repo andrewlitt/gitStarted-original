@@ -40,7 +40,7 @@
 
 					<h2 class="description-text">Choose which modules you want</h2>
                     
-                    <ul>
+                    <ul id="popular_modules_list">
                     	{{#node_modules}}
 						<li class="popular_modules"><label for="{{name}}"><input type="checkbox" id="{{name}}" name="modules" value="{{name}}?{{version}}"/><a target="_blank" href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
 						{{/node_modules}}
@@ -82,11 +82,26 @@
 						$('li.search_result_list_item > label').each(function() {
 							$(this).bind('click', function(e) {
 								e.stopPropagation();
-								if ($(this).find('input').is(':checked')) {
-									$(this).addClass("added-module");
-								} else {
-									$(this).removeClass("added-module");
-								}
+								$(this).unbind('click');
+								$(this).find('input').attr('name', 'modules');
+								$(this).addClass("added-module");
+								var info = $(this.parentNode);
+								$(info).removeClass('search_result_list_item');
+								$(info).addClass('popular_modules');
+								$(info).bind('click', function(e) {
+									e.stopPropagation();
+									if ($(this).find('input').is(':checked')) {
+										$(this).addClass("added-module");
+									} else {
+										$(this).removeClass("added-module");
+									}
+								});
+								$('#popular_modules_list').append($(info));
+								// if ($(this).find('input').is(':checked')) {
+								// 	$(this).addClass("added-module");
+								// } else {
+								// 	$(this).removeClass("added-module");
+								// }
 							});
 						});
 					}
@@ -143,7 +158,7 @@
 				if (tempModules.length > 0) {
 					for (var i = 0; i < tempModules.length; i++) {
 						var info = $(tempModules[i]).val();
-						info = info.split("?");
+						info = info.split("?v");
 						modules.push({
 							"name":info[0],
 							"version":info[1]
