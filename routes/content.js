@@ -17,11 +17,11 @@ module.exports = (function() {
     				  username: username,
     				  password: password
     				});
-
+            console.log(req.session);
         	client.get('/user/repos', {}, function (err, status, body, headers) {
         		fs.readFile(path.join(__dirname + '/../views/content.html'), 'utf-8', function(err, data) {
         			var template = Handlebars.compile(data);
-        			res.send(template({"username":username, "node_modules":npm.getCurrentTopModules(), "avatar_url":req.session.avatar, "github_profile_url":req.session.github_profile}));
+        			res.send(template({"name":req.session.userInfo.name, "node_modules":npm.getCurrentTopModules(), "avatar_url":req.session.avatar, "github_profile_url":req.session.github_profile}));
         		});
         	});
         } else {
