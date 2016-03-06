@@ -24,7 +24,20 @@
                     <input id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
                      <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
                     <!-- <input id="submit_image_button" class="submitButton" type="submit" value="Submit"> -->
-
+                     
+                     <center>
+                        <h1 class="loginTitle">Front End</h1>
+                            <form class="frontend_setup" method="post" action="frontendSetup">
+                     <input type="checkbox" name="JQuery" value="JQuery" id="check1"/><label for="check1"><span></span> JQuery <img src="pictures/jquery.png" class="smallLogo"/></label><br>
+                     <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check2"/><label for="check2"><span></span> Bootstrap<img src="pictures/boot.png" class="smallLogo"/></label><br>
+                     <input type="checkbox" name="Font Awesome" value="FA" id="check3"/><label for="check3"><span></span> Font Awesome <img src="pictures/FA.png" class="smallLogo"/></label><br>
+                        <h1 class="loginTitle">Back End</h1>
+                     <input type="radio" name="dev" value="JQuery" id="radio1"><label for="radio1"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
+                     <input type="radio" name="dev" value="Bootstrap" id="radio2"><label for="radio2"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
+                     <input type="radio" name="dev" value="FA" id="radio3"><label for="radio3"><span></span>Neither</label><br>
+                     <input id="submit_image_button" class="submitButton" type="submit" value="Submit">
+                </form>
+            </center>
 					<h2>Choose which modules you want</h2>
                     <ul>
                     	{{#node_modules}}
