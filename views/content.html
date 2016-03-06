@@ -56,7 +56,10 @@
 
 					<button type="submit">Do it</button>
 				</form>
-				<button type="submit">MAKE IT HAPPEN!</button>
+				<form method="post" id="make-it-happen-form" action="/gitStarted">
+					<input type="hidden" name="message" value="hello!">
+					<button id="make-it-all-happen" type="submit">MAKE IT HAPPEN!</button>
+				</form>
             </center>
         </div>
     </div>
@@ -96,6 +99,49 @@
 						$(this).addClass("added-module");
 					} else {
 						$(this).removeClass("added-module");
+					}
+				});
+			});
+
+			$('#make-it-happen-form').on('submit', function(e) {
+				e.preventDefault();
+				var repoName = $('#git_reponame').val();
+				var contributors = $('#git_contributors').val();
+				var desc = $('#git_description').val();
+				var tempModules = $('li.popular_modules > label > input[type=checkbox]:checked');
+				var modules = [];
+				console.log(tempModules);
+				if (tempModules.length > 0) {
+					for (var i = 0; i < tempModules.length; i++) {
+						var info = $(tempModules[i]).val();
+						info = info.split("?");
+						modules.push({
+							"name":info[0],
+							"version":info[1]
+						});
+					}
+				}
+				$.ajax({
+					url:'/gitStarted',
+					data:{
+						repoName:repoName,
+						contributors:contributors,
+						desc:desc,
+						modules:modules
+					},
+					method:'post'
+				}).done(function(data) {
+					console.log(data);
+					if (data) {
+						$search_modules_results.html(data);
+						$('#search_result_list_item > input').on('change', function() {
+							if (this.checked) {
+								// console.log("You want this one.");
+								$(this.parentNode).addClass("added-module");
+							} else {
+								$(this.parentNode).removeClass("added-module");
+							}
+						});
 					}
 				});
 			});

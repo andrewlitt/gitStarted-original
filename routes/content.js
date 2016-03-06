@@ -10,21 +10,23 @@ module.exports = (function() {
     var router = express.Router();
 
     router.get('/github', function(req, res) {
-    	// console.log(req.session);
-    	// console.log(req.session.following);
-    	var username = req.session.client.token.username;
-    	var password = req.session.client.token.password;
-    	var client = github.client({
-				  username: username,
-				  password: password
-				});
+        if (req.session != null && req.session.client != null) {
+        	var username = req.session.client.token.username;
+        	var password = req.session.client.token.password;
+        	var client = github.client({
+    				  username: username,
+    				  password: password
+    				});
 
-    	client.get('/user/repos', {}, function (err, status, body, headers) {
-    		fs.readFile(path.join(__dirname + '/../views/content.html'), 'utf-8', function(err, data) {
-    			var template = Handlebars.compile(data);
-    			res.send(template({"username":username, "node_modules":npm.getCurrentTopModules(), "avatar_url":req.session.avatar, "github_profile_url":req.session.github_profile}));
-    		});
-    	});
+        	client.get('/user/repos', {}, function (err, status, body, headers) {
+        		fs.readFile(path.join(__dirname + '/../views/content.html'), 'utf-8', function(err, data) {
+        			var template = Handlebars.compile(data);
+        			res.send(template({"username":username, "node_modules":npm.getCurrentTopModules(), "avatar_url":req.session.avatar, "github_profile_url":req.session.github_profile}));
+        		});
+        	});
+        } else {
+            res.redirect('/');
+        }
     });
 
     router.post('/searchModules', function (req, res) {
@@ -38,7 +40,7 @@ module.exports = (function() {
                 }
             });
         });
-    });
+    }); 
 
     return router;    
 })();
