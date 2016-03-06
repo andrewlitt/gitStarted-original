@@ -135,13 +135,24 @@ body {
     font-size:5vh;
     color: white;
     display: block;
+    
 }
+button.submitButton.smallSubmit {
+    margin:10px 0 15px 0;
+    height:40px;
+    font-size:20px;
+    border-radius:10px;
+    border-width:3px;
+    
+}
+
 #submit_image_button:hover {
     opacity: 0.7;
 }
 
 #make-it-all-happen:hover {
     opacity: 0.7;
+    cursor:pointer;
 }
 
 .qsgs{
@@ -217,34 +228,37 @@ ul {
     
     li.popular_modules {
         display:inline-block;
-        width:30%;
-        margin:1%;
+        width:33.33333%;
         float:left;
         height:75px;
-        border:1vh solid;
-        box-sizing:border-box;
-        
         position:relative;
-        border-radius: 5vh !important;
-        border-width: 1vh;
-        border-color: rgba(255,255,255,1);
-        background-color:rgba(255,255,255,0.8);
+        margin:10px auto;
 
         label {
-            width:100%;
+            width:98%;
             height:100%;
             display:block;
+            
+            margin:auto;
+            
+            border:1vh solid;
+            box-sizing:border-box;
+            border-radius: 10px;
+            border-width: 3px;
+            border-color: rgba(255,255,255,1);
+            background-color:rgba(255,255,255,0.8);
         }
         
         label:hover {
             background-color: rgba(255,255,255,0.2) !important;
-            border-radius: 5vh !important;
+            // border-radius: 5vh !important;
             cursor:pointer;
         }
         
         label.added-module {
             background-color:white !important;
-            border-radius: 5vh;
+            // border-radius: 5vh;
+            border-color:black;
         }
 
         a {
@@ -283,27 +297,6 @@ ul {
         content:"";
         display:block;
     }
-    li.popular_modules:hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-    li.popular_modules:nth-child(3n) {
-        background-color: rgba(255,255,255,0.8);
-        border-radius: 3vh;
-        border-width: 1vh;
-        border-color: #FF724C;;
-    }
-    li.popular_modules:nth-child(3n-2) {
-        background-color: rgba(255,255,255,0.8);
-        border-radius: 3vh;
-        border-width: 1vh;
-        border-color: #FFAC4C;
-    }
-    li.popular_modules:nth-child(3n-2):hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-     li.popular_modules:nth-child(3n):hover {
-        background-color: rgba(255,255,255,0.2);
-    }
  
 }
 
@@ -336,51 +329,108 @@ label {
 }
 
 /* Search Result */
-#search_result_list_item {
+.search_result_list_item {
     display:inline-block;
-    width:30%;
-    margin:1%;
+    width:33.33333%;
+    // margin:1%;
     float:left;
-    height:3em;
-    background-color:#CCCCCC;
-    border:1px solid #000000;
-    box-sizing:border-box;
+    height:75px;
+    // background-color:#CCCCCC;
+    // border:1px solid #000000;
+    // box-sizing:border-box;
         
     position:relative;
-    border-radius: 5vh;
-    border-width: 1vh;
-    border-color: rgba(255,255,255,1);
-    background-color:rgba(255,255,255,0.8); 
+    text-align:center;
+    margin:auto;
+    margin-top:10px;
+    
+    label {
+        border-radius: 10px;
+        border-width: 3px;
+        border-color: rgba(255,255,255,1);
+        background-color:rgba(255,255,255,0.8);
+        width:98%
+        height:100%;
+        display:block;
+    }
 }
-#search_result_list_item:nth-child(3n) {
-    background-color: rgba(255,255,255,0.8);
-    border-radius: 5vh;
-    border-width: 1vh;
-    border-color: #FF724C;;
+
+#search_module_results {
+    ul {
+        padding: 0;
+        list-style: none;
+        margin-top: 50px;
+        display: block;
+        text-align: center;
+        margin: 50px auto;
+        
+        li.search_result_list_item {
+            float:none;
+            width:33%;
+            
+            label {
+                width:100%
+                border-radius:10px;
+                border:3px solid white;
+                box-sizing:border-box;
+            }
+            
+            label:hover {
+                background-color: rgba(255,255,255,0.2) !important;
+                cursor:pointer;
+                border-radius:10px;
+                border:3px solid white;
+                box-sizing:border-box;
+            }
+            
+            input[type=checkbox] {
+                position:relative;
+                left:-100000px;
+            }
+            
+            label.added-module, label.added-module:hover {
+                background-color:white !important;
+                // border-radius: 5vh;
+                border-color:black;
+            }
+        }
     }
-#search_result_list_item:nth-child(3n-2) {
-    background-color: rgba(255,255,255,0.8);
-    border-radius: 5vh;
-    border-width: 1vh;
-    border-color: #FFAC4C;
-    }
-#search_result_list_item:nth-child(3n-2):hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-#search_result_list_item:nth-child(3n):hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-#search_result_list_item:hover {
-    background-color: rgba(255,255,255,0.2);
 }
- 
+
+input#check_jquery, input#check_bootstrap, input#check_fontawesome {
+    position:relative;
+    left:-10000px;
+}
+    
+
+// #search_result_list_item:nth-child(3n) {
+//     background-color: rgba(255,255,255,0.8);
+//     border-radius: 5vh;
+//     border-width: 1vh;
+//     border-color: #FF724C;;
+//     }
+// #search_result_list_item:nth-child(3n-2) {
+//     background-color: rgba(255,255,255,0.8);
+//     border-radius: 5vh;
+//     border-width: 1vh;
+//     border-color: #FFAC4C;
+//     }
+// #search_result_list_item:nth-child(3n-2):hover {
+//         background-color: rgba(255,255,255,0.2);
+//     }
+// #search_result_list_item:nth-child(3n):hover {
+//         background-color: rgba(255,255,255,0.2);
+//     }
+// #search_result_list_item:hover {
+//     background-color: rgba(255,255,255,0.2);
+// }
 
 
 /* Check Boxes */
 
-input[type="checkbox"]{
-    display:none;
-}
+// input[type="checkbox"]{
+//     display:none;
+// }
 input[type="checkbox"] + label span {
     display: inline-block;
     width: 4vh;

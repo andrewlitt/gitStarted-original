@@ -192,6 +192,10 @@ function parseBody(body) {
 		var url = module('h3 > a').attr('href');
 		var desc = module('p.description').html();
 		var version = module('a.version').html();
+		console.log("VERSION: " + version);
+		if (version == null) {
+			version = module('span.version').html();
+		}
 		var obj = {
 			name:name,
 			url:url,

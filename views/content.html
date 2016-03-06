@@ -22,20 +22,21 @@
                 <h2 class="loginTitle">Setup Repository</h2>
                  <form class="gitrepo_field" method="post" action="/modules">
                     <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
-                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors">
+                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)">
                      <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
                   
                      
                      <center>
                         <h1 class="loginTitle">Front End</h1>
                             <form class="frontend_setup" method="post" action="frontendSetup">
-                                <input type="checkbox" name="JQuery" value="JQuery" id="check1"/><label for="check1"><span></span><a>JQuery </a><img src="pictures/jquery.png" class="smallLogo"/></label><br>
-                                <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check2"/><label for="check2"><span></span> <a>Bootstrap</a><img src="pictures/boot.png" class="smallLogo"/></label><br>
-                                <input type="checkbox" name="Font Awesome" value="FA" id="check3"/><label for="check3"><span></span><a> Font Awesome </a><img src="pictures/FA.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="JQuery" value="JQuery" id="check_jquery"/><label for="check_jquery"><span></span><a>JQuery </a><img src="pictures/jquery.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check_bootstrap"/><label for="check_bootstrap"><span></span> <a>Bootstrap</a><img src="pictures/boot.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="Font Awesome" value="FA" id="check_fontawesome"/><label for="check_fontawesome"><span></span><a> Font Awesome </a><img src="pictures/FA.png" class="smallLogo"/></label><br>
                             <h1 class="loginTitle">Back End</h1>
-                                <input type="radio" name="dev" value="JQuery" id="radio1"><label for="radio1"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
-                                <input type="radio" name="dev" value="Bootstrap" id="radio2"><label for="radio2"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
-                                <input type="radio" name="dev" value="FA" id="radio3"><label for="radio3"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
+                                <input type="radio" name="dev" value="JQuery" id="radio_gulp" checked="checked"><label for="radio_gulp"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
+                                <input type="radio" name="dev" value="Bootstrap" id="radio_grunt"><label for="radio_grunt"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
+                                <input type="radio" name="dev" value="FA" id="radio_none"><label for="radio_none"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
+                                <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename">
                             </form>
                         </center>
 
@@ -47,14 +48,12 @@
 					</ul>
 				</form>
 				<form method="post" id="search_modules_form"  action="/searchModules">
-						<input class="password" type="text" id="search_modules_input" name="searchModules">
-						<button type="submit">Search</button>
-					<div id="search_module_results">
+						<input class="password" type="text" id="search_modules_input" name="searchModules" placeholder="Search for Node Modules">
+						<button type="submit" class="submitButton smallSubmit">Search</button>
+				</form>
+				<div id="search_module_results">
 						
 					</div>
-
-					
-				</form>
                 
 				<form method="post" id="make-it-happen-form" action="/gitStarted">
 					<input type="hidden" name="message" value="hello!">
@@ -81,13 +80,15 @@
 				}).done(function(data) {
 					if (data) {
 						$search_modules_results.html(data);
-						$('#search_result_list_item > input').on('change', function() {
-							if (this.checked) {
-								// console.log("You want this one.");
-								$(this.parentNode).addClass("added-module");
-							} else {
-								$(this.parentNode).removeClass("added-module");
-							}
+						$('li.search_result_list_item > label').each(function() {
+							$(this).bind('click', function(e) {
+								e.stopPropagation();
+								if ($(this).find('input').is(':checked')) {
+									$(this).addClass("added-module");
+								} else {
+									$(this).removeClass("added-module");
+								}
+							});
 						});
 					}
 				});
@@ -134,6 +135,9 @@
 				var gulp = $('#radio_gulp').is(':checked') ? true : false;
 				var none = $('#radio_none').is(':checked') ? true : false;
 				var backend_helper = grunt == true ? "grunt" : gulp == true ? "gulp" : null;
+				var collaborators = $('#git_contributors').val().split(',');
+
+
 
 				var modules = [];
 				console.log(tempModules);
@@ -185,22 +189,12 @@
 								boostrap:bootstrap,
 								fontAwesome:fontAwesome
 							},
+							collaborators:collaborators,
 							nodeManager:backend_helper
 						},
 						method:'post'
 					}).done(function(data) {
 						console.log(data);
-						if (data) {
-							$search_modules_results.html(data);
-							$('#search_result_list_item > input').on('change', function() {
-								if (this.checked) {
-									// console.log("You want this one.");
-									$(this.parentNode).addClass("added-module");
-								} else {
-									$(this.parentNode).removeClass("added-module");
-								}
-							});
-						}
 					});
 				}
 			});

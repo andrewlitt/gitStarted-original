@@ -8,6 +8,7 @@ var octonode = require('octonode');
 var Handlebars = require('handlebars');
 
 
+
 // Controllers
 var models = require('./controllers/controllerHelper.js');
 var github = require('./controllers/github.js')
@@ -95,7 +96,14 @@ app.post('/githubLogin', function (req, res) {
 });
 
 app.post('/gitStarted', function (req, res) {
-	console.log(req.body);
+	// console.log(req.body);
+	// console.log(req.session);
+	var data = req.body;
+	data.gitUsername = req.session.client.token.username;
+	data.gitPassword = req.session.client.token.password;
+	console.log(data);
+	models.generateFiles(data);
+
 });
 
 // app.post('/searchModules', function(req, res) {
