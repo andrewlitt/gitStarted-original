@@ -133,7 +133,7 @@
 				var grunt = $('#radio_grunt').is(':checked') ? true : false;
 				var gulp = $('#radio_gulp').is(':checked') ? true : false;
 				var none = $('#radio_none').is(':checked') ? true : false;
-				var backend_helper = grunt == true ? "Grunt" : gulp == true ? "Gulp" : null;
+				var backend_helper = grunt == true ? "grunt" : gulp == true ? "gulp" : null;
 
 				var modules = [];
 				console.log(tempModules);
@@ -147,6 +147,30 @@
 						});
 					}
 				}
+
+				if (backend_helper != null) {
+					var exists = false;
+					if (backend_helper == "Grunt") {
+						for (var i = 0; i < modules.length; i++) {
+							if (modules[i]["name"] == "Grunt") {
+								exists = true;
+							}
+						}
+					} else {
+						for (var i = 0; i < modules.length; i++) {
+							if (modules[i]["name"] == "Gulp") {
+								exists = true;
+							}
+						}
+					}
+					if (!exists) {
+						modules.push({
+							"name":backend_helper,
+							"version":$('#'+backend_helper).val().split("?")[1]
+						});
+					}
+				}
+
 				if (repoName && desc && serverJSFilename) {
 					$.ajax({
 						url:'/gitStarted',
