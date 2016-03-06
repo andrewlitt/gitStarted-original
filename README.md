@@ -16,7 +16,7 @@ To run:
 gulp
 ```
 ## Credits
-Made by [Jake Alsemgeest](https://github.com/Jalsemgeest), [Zack Harley](https://github.com/zackharley), [Colin MacLeod](https://github.com/ColinLMacLeod1) and [Andrew Litt](https://github.com/andrewlitt)!
+Created by [Jake Alsemgeest](https://github.com/Jalsemgeest), [Zack Harley](https://github.com/zackharley), [Colin MacLeod](https://github.com/ColinLMacLeod1) and [Andrew Litt](https://github.com/andrewlitt)!
 
 
 Made with :heart: in Kingston, Ontario for QHacks 2016
