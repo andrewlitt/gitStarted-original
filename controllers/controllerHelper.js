@@ -99,8 +99,10 @@ var Helper = function () {
     
     this.htmlStart = `<!DOCTYPE html><html><head><title>`;
 
-    this.htmlEnd = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
+    this.htmlEndWBootstrap = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
     
+    this.htmlEnd = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
+
     this.generateFiles = function(data) {
         github.startGithub(data.gitUsername, data.gitPassword);
         this.generateServerFile(data.serverName, data.dependencies);
@@ -167,19 +169,19 @@ var Helper = function () {
     
     this.generateHTML = function(data) {
         var jQuery = '', bootstrap = '', fontAwesome = '';
-        if(data.frontEnd.JQuery) {
+        if(data.frontEnd.jquery) {
             // add jQuery
             jQuery = '\n<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>\n';
         }
-        if(data.frontEnd.Bootstrap) {
+        if(data.frontEnd.bootstrap) {
             // add Bootstrap
             bootstrap = `\n<!-- Latest compiled and minified CSS -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">\n\n<!-- Optional theme -->\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">\n\n<!-- Latest compiled and minified JavaScript -->\n<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>\n`;
         }
-        if(data.frontEnd.FA) {
+        if(data.frontEnd.fontAwesome) {
             // add FontAwesome
             fontAwesome = '\n<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">\n';
         }
-        this.projectData[3].children[0].contents = this.htmlStart + data.gitProjectName + `</title>` + jQuery + fontAwesome + bootstrap + this.htmlEnd;
+        this.projectData[3].children[0].contents = this.htmlStart + data.gitProjectName + `</title>` + jQuery + fontAwesome + bootstrap + data.frontEnd.bootstrap ? this.htmlEndWBootstrap : this.htmlEnd;
         // console.log(this.projectData[3][0].contents);
     }
 }
