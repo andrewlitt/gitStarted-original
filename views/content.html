@@ -1,30 +1,235 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quit Slackin' Git Started</title>
+	<title>gitStarted</title>
+    <link rel="icon" href="pictures/icon.ico">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="main.css" />
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300|Rancho' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<h1>CONTENT</h1>
-	<h2>{{username}}</h2>
+	<div class="background-image"></div>
+	<div class="user_image">
+		<a href="{{github_profile_url}}" target="_blank"><img src="{{avatar_url}}"></a>
+	</div>
+	<div class="titlePage">
+        <div>
+            <center><img class="headerTitle" src="pictures/logo.png"/></center>
+        </div>
+        <div class="changingDiv">
+            <center>
+                <h2 style = "padding-top:5vh" class = "description-text">Hello {{name}}! Let's get your repository set up.</h2>
+                <h2 class="loginTitle">Setup Repository</h2>
+                 <form class="gitrepo_field" method="post" action="/modules">
+                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
+                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)">
+                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
+                     <center>
+                        <h1 class="loginTitle">Front End</h1>
+                            <form class="frontend_setup" method="post" action="frontendSetup">
+                                <input type="checkbox" name="JQuery" value="JQuery" id="check_jquery"/><label for="check_jquery"><span></span><a>JQuery </a><img src="pictures/jquery.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="Bootstrap" value="Bootstrap" id="check_bootstrap"/><label for="check_bootstrap"><span></span> <a>Bootstrap</a><img src="pictures/boot.png" class="smallLogo"/></label><br>
+                                <input type="checkbox" name="Font Awesome" value="FA" id="check_fontawesome"/><label for="check_fontawesome"><span></span><a> Font Awesome </a><img src="pictures/FA.png" class="smallLogo"/></label><br>
+                            <h1 class="loginTitle">Back End</h1>
+                                <input type="radio" name="dev" value="JQuery" id="radio_gulp" checked="checked"><label for="radio_gulp"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
+                                <input type="radio" name="dev" value="Bootstrap" id="radio_grunt"><label for="radio_grunt"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
+                                <input type="radio" name="dev" value="FA" id="radio_none"><label for="radio_none"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
+                                <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename">
+                            </form>
+                        </center>
 
-	<form method="post"  action="/searchModules">
-		<input type="text" name="searchModules">
-		<button type="submit">Search</button>
-	</form>
-
-	<form method="post" action="/modules">
-		<ul>{{#node_modules}}
-			<li class=""><input type="checkbox" name="modules" value="{{name}}"/><a href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></li>
-			{{/node_modules}}
-		</ul>
-		<button type="submit">Do it</button>
-	</form>
-
+					<h2 class="description-text">Choose which modules you want</h2>
+                    
+                    <ul id="popular_modules_list">
+                    	{{#node_modules}}
+						<li class="popular_modules"><label for="{{name}}"><input type="checkbox" id="{{name}}" name="modules" value="{{name}}?{{version}}"/><a target="_blank" href="http://npmjs.com{{url}}">{{name}}</a><p>{{desc}}</p></label></li>
+						{{/node_modules}}
+					</ul>
+				</form>
+				<form method="post" id="search_modules_form"  action="/searchModules">
+						<input class="password" type="text" id="search_modules_input" name="searchModules" placeholder="Search for Node Modules">
+						<button type="submit" class="submitButton smallSubmit">Search</button>
+				</form>
+				<div id="search_module_results">
+						
+					</div>
+                
+				<form method="post" id="make-it-happen-form" action="/gitStarted">
+					<input type="hidden" name="message" value="hello!">
+					<button class="gsButton" id="make-it-all-happen" type="submit">MAKE IT HAPPEN!</button>
+				</form>
+                
+            </center>
+        </div>
+    </div>
 	<script>
 		$(document).ready(function() {
+			var $search_modules_results = $("#search_module_results");
+			var $search_modules_form = $("#search_modules_form");
+			console.log($('#search_modules_input').val());
+			$search_modules_form.on('submit', function(e) {
+				e.preventDefault();
+				$search_modules_results.empty();
+				$.ajax({
+					url:'/searchModules',
+					data:{
+						searchModules:$('#search_modules_input').val()
+					},
+					method:'post'
+				}).done(function(data) {
+					if (data) {
+						$search_modules_results.html(data);
+						$('li.search_result_list_item > label').each(function() {
+							$(this).bind('click', function(e) {
+								e.stopPropagation();
+								$(this).unbind('click');
+								$(this).find('input').attr('name', 'modules');
+								$(this).addClass("added-module");
+								var info = $(this.parentNode);
+								$(info).removeClass('search_result_list_item');
+								$(info).addClass('popular_modules');
+								$(info).bind('click', function(e) {
+									e.stopPropagation();
+									if ($(this).find('input').is(':checked')) {
+										$(this).addClass("added-module");
+									} else {
+										$(this).removeClass("added-module");
+									}
+								});
+								$('#popular_modules_list').append($(info));
+								// if ($(this).find('input').is(':checked')) {
+								// 	$(this).addClass("added-module");
+								// } else {
+								// 	$(this).removeClass("added-module");
+								// }
+							});
+						});
+					}
+				});
+			});
+			
+			$('input[type=text]').each( function() {
+				$(this).bind('input', function(e) {
+					if ($(this).val().indexOf(' ') != -1) {
+						$(this).val($(this).val().replace(' ', '-'));
+					}
+					if ($(this).attr('id') == "server_js_filename") {
+						if (!$(this).val().match('.js$')) {
+							$(this).val($(this).val()+'.js');
+							setCaretToPos($(this)[0], $(this).val().length-3);
+						} else {
+							setCaretToPos($(this)[0], $(this).val().length-3);
+						}
+					}
+				});
+			});
 
+			$('li.popular_modules > label').each(function() {
+				$(this).bind('click', function(e) {
+					e.stopPropagation();
+					if ($(this).find('input').is(':checked')) {
+						$(this).addClass("added-module");
+					} else {
+						$(this).removeClass("added-module");
+					}
+				});
+			});
+
+			$('#make-it-happen-form').on('submit', function(e) {
+				e.preventDefault();
+				var repoName = $('#git_reponame').val();
+				var contributors = $('#git_contributors').val();
+				var desc = $('#git_description').val();
+				var tempModules = $('li.popular_modules > label > input[type=checkbox]:checked');
+				var serverJSFilename = $('#server_js_filename').val();
+				var jquery = $('#check_jquery').is(':checked') ? true : false;
+				var bootstrap = $('#check_bootstrap').is(':checked') ? true : false;
+				var fontAwesome = $('#check_fontawesome').is(':checked') ? true : false;
+				var grunt = $('#radio_grunt').is(':checked') ? true : false;
+				var gulp = $('#radio_gulp').is(':checked') ? true : false;
+				var none = $('#radio_none').is(':checked') ? true : false;
+				var backend_helper = grunt == true ? "grunt" : gulp == true ? "gulp" : null;
+				var collaborators = $('#git_contributors').val().split(',');
+
+
+
+				var modules = [];
+				console.log(tempModules);
+				if (tempModules.length > 0) {
+					for (var i = 0; i < tempModules.length; i++) {
+						var info = $(tempModules[i]).val();
+						info = info.split("?");
+						modules.push({
+							"name":info[0],
+							"version":info[1].substring(0)
+						});
+					}
+				}
+
+				if (backend_helper != null) {
+					var exists = false;
+					if (backend_helper == "Grunt") {
+						for (var i = 0; i < modules.length; i++) {
+							if (modules[i]["name"] == "Grunt") {
+								exists = true;
+							}
+						}
+					} else {
+						for (var i = 0; i < modules.length; i++) {
+							if (modules[i]["name"] == "Gulp") {
+								exists = true;
+							}
+						}
+					}
+					if (!exists) {
+						modules.push({
+							"name":backend_helper,
+							"version":$('#'+backend_helper).val().split("?")[1]
+						});
+					}
+				}
+
+				if (repoName && desc && serverJSFilename) {
+					$.ajax({
+						url:'/gitStarted',
+						data:{
+							gitProjectName:repoName,
+							contributors:contributors,
+							gitProjectDesc:desc,
+							dependencies:modules,
+							serverName:serverJSFilename,
+							frontEnd: {
+								jquery:jquery,
+								boostrap:bootstrap,
+								fontAwesome:fontAwesome
+							},
+							collaborators:collaborators,
+							nodeManager:backend_helper
+						},
+						method:'post'
+					}).done(function(data) {
+						console.log(data);
+					});
+				}
+			});
 		});
+		function setSelectionRange(input, selectionStart, selectionEnd) {
+		  if (input.setSelectionRange) {
+		    input.focus();
+		    input.setSelectionRange(selectionStart, selectionEnd);
+		  }
+		  else if (input.createTextRange) {
+		    var range = input.createTextRange();
+		    range.collapse(true);
+		    range.moveEnd('character', selectionEnd);
+		    range.moveStart('character', selectionStart);
+		    range.select();
+		  }
+		}
+
+		function setCaretToPos (input, pos) {
+		  setSelectionRange(input, pos, pos);
+		}
 	</script>
 </body>
 </html>
