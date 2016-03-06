@@ -55,7 +55,7 @@ body {
     border-color: azure;
     border-radius: 3vh;
 }
-.gsbutton{
+.gsButton{
     background-color: #36B66E; /* Green */
     border: none;
     color: white;
@@ -64,11 +64,14 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 22px;
     font-size: 5vh;
     font-family:'Oswald';
     border-radius: 8px;
 }
+.gsbutton:hover{
+    background-color: rgba(50,166,101,1);
+    cursor: pointer;
+} 
 .copyButton {
     background-color: #36B66E; /* Green */
     border: none;
@@ -80,6 +83,10 @@ body {
     font-size: 16px;
     font-family: 'Oswald';
     border-radius: 8px;
+}
+.copyButton:hover {
+    background-color: rgba(50,166,101,1);
+    cursor: pointer;
 }
 .titlePageSlogan{
     width: 40vh;
@@ -123,7 +130,6 @@ body {
     height: 4vh;
     width: 30vw;
 }
-
 .username {
     display: list-item;
     margin-top: 5vh;
@@ -131,6 +137,17 @@ body {
     border-radius: 3vh;
     border-width: 1vh;
     border-color: #FF724C;
+    padding-left: 1vh;
+    height: 4vh;
+    width: 30vw;
+}
+.valid {
+    display: list-item;
+    margin-top: 5vh;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 3vh;
+    border-width: 1vh;
+    border-color: #36B66E;
     padding-left: 1vh;
     height: 4vh;
     width: 30vw;
@@ -327,20 +344,6 @@ ul {
  
 }
 
-
- /*ul {    
-        li.search_result_list_item {
-            background-color:#DCDCDC;
-        }
-        li.search_result_list_item:nth-child(3)::after {
-            content:"";
-            display:block;
-        }
-        li.search_result_list_item:hover {
-            background-color:#DCDCDC;
-        }
-    }
-*/
 label {
     font-family:'Myriad Pro';
     /*font-size: 5vh; */
