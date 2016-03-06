@@ -114,7 +114,7 @@ var Helper = function () {
         this.generateHtmlTML(data);
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
-        github.createRepo(data.gitProjectName, data.gitProjectDesc, files);
+        github.createRepo(data.gitProjectName, data.gitProjectDesc, files, data.collaborators);
         return 'https://github.com/' + data.gitUsername + '/' + data.gitProjectName + '.git';
     }
     
