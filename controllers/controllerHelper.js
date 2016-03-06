@@ -121,7 +121,7 @@ var Helper = function () {
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
         github.createRepo(data.gitProjectName, data.gitProjectDesc, files, data.collaborators);
-        return 'https://github.com/' + data.gitUsername + '/' + data.gitProjectName + '.git';
+        return 'https://github.com/' + data.gitUsername + '/' + data.gitProjectName;
     }
     
     this.scanFiles = function(root, repoName, desc){
