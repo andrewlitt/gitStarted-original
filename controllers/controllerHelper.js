@@ -212,8 +212,8 @@ function getPackageDependencies(dependencies) {
 }
 
 function getRequireStatement(val) {
-    val = val.replace(/-[a-z]|-[A-Z]/g, function($1) {
+    var varName = val.replace(/[-|\.][a-z|A-Z]/g, function($1) {
 	   return $1.charAt(1).toUpperCase();
     });
-    return "var " + val.replace(/-[a-z]|-[A-Z]/g, function($1){return $1.charAt(1).toUpperCase();); + " = require('" + val + "');\n";
+    return "var " + varName + " = require('" + val + "');\n";
 }
