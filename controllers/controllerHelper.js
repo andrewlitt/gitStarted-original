@@ -212,5 +212,8 @@ function getPackageDependencies(dependencies) {
 }
 
 function getRequireStatement(val) {
-    return "var " + val + " = require('" + val + "');\n";
+    val = val.replace(/-[a-z]|-[A-Z]/g, function($1) {
+	   return $1.charAt(1).toUpperCase();
+    });
+    return "var " + val.replace(/-[a-z]|-[A-Z]/g, function($1){return $1.charAt(1).toUpperCase();); + " = require('" + val + "');\n";
 }
