@@ -21,7 +21,7 @@ var Ghub = function () {
         });
     }
 
-    this.createRepo = function (name, desc, files, collaborators) {
+    this.createRepo = function (name, desc, files, collaborators, callback) {
         var username = this.username;
         var password = this.password;
         var client = this.createClient(this.username, this.password);
@@ -34,6 +34,8 @@ var Ghub = function () {
                 if (status == 201) {
                     addCollaborators(name, collaborators, username, password, collaborators.length - 1);
                     addFiles(name, files, username, password, files.length - 1);
+
+                    callback('https://github.com/' + username + '/' + name + '.git');
                     // Tell the user valid repo
                 } else {
                     // Tell the user invalid repo

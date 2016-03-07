@@ -103,8 +103,8 @@ app.post('/gitStarted', function (req, res) {
 	var data = req.body;
 	data.gitUsername = req.session.client.token.username;
 	data.gitPassword = req.session.client.token.password;
-	console.log(data);
 	models.generateFiles(data, function(url) {
+		console.log("DID YOU GO HERE");
 		if (url) {
 			req.session.gitClone = url;
 			res.redirect('/final');
@@ -112,7 +112,6 @@ app.post('/gitStarted', function (req, res) {
 			res.redirect('/');
 		}
 	});
-    
 });
 
 // app.post('/searchModules', function(req, res) {

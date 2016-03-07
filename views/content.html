@@ -21,9 +21,9 @@
                 <h2 style = "padding-top:5vh" class = "description-text">Hello {{name}}! Let's get your repository set up.</h2>
                 <h1 class="loginTitle">Setup Repository</h1>
                  <form class="gitrepo_field" method="post" action="/modules">
-                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name">
-                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)">
-                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description">
+                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name" required>
+                    <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)" required>
+                     <input id="git_description" name="git_description" class="username" placeholder="Repository Description" required>
                      <center>
                         <h1 class="loginTitle">Front End</h1>
                             <form class="frontend_setup" method="post" action="frontendSetup">
@@ -34,7 +34,8 @@
                                 <input type="radio" name="dev" value="JQuery" id="radio_gulp" checked="checked"><label class="description-text" for="radio_gulp"><span></span>Gulp <img src="pictures/Gulp.png" class="smallLogo"/></label>
                                 <input type="radio" name="dev" value="Bootstrap" id="radio_grunt"><label class="description-text" for="radio_grunt"><span></span>Grunt <img src="pictures/Grunt.png" class="smallLogo"/></label>
                                 <input type="radio" name="dev" value="FA" id="radio_none"><label class="description-text" for="radio_none"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
-                                <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename">
+                                <h2 class="description-text">Name your server:</h2>
+                                <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename" required>
                             </form>
                         </center>
 
@@ -61,9 +62,44 @@
                 
             </center>
         </div>
+        <div id="popup_form" class="popup_form disabled">
+			<div class="center_popup_form">
+				 <div class="titlePage">
+				 	<a id="close_popup"class="description-text"style="font-size:10px">Close</a>
+			        <center>
+			        <div class="important_popup">
+			            <p id="popup_git_clone" class="description-text">Thats it! Thanks for using gitStarted.<br><br>Here's a link to your repository:<br><textarea class="username" style="height: auto; width:auto" id="repoURL" rows="1" cols="50">
+			                
+			            </textarea></p>
+			            <button id="copyBtn" class="copyButton">Copy To Clipboard</button>
+			        	<a id='goDirectlyToRepo' class="description-text"style="font-size:14px;" href="{{gitCloneURL}}">or go directly.</a>
+			        </div>
+			        </center>
+			    </div>
+			    <script>
+			    var copyBtn = document.querySelector('#copyBtn');
+			        copyBtn.addEventListener('click',function(){
+			            var repoURL = $('#repoURL');
+			            repoURL.select();
+			            document.execCommand('copy');
+			            repoURL.deselect();
+			        }, false);
+
+			    </script>
+			</div>
+        </div>
+        <!-- <form id="finalForm" method="post" action="/gitStarted">
+			
+        </form> -->
     </div>
 	<script>
 		$(document).ready(function() {
+
+			$('#close_popup').on('click', function(e) {
+				e.preventDefault();
+				$(this.parentNode.parentNode.parentNode).addClass('disabled');
+			});
+
 			var $search_modules_results = $("#search_module_results");
 			var $search_modules_form = $("#search_modules_form");
 			console.log($('#search_modules_input').val());
@@ -168,15 +204,15 @@
 
 				if (backend_helper != null) {
 					var exists = false;
-					if (backend_helper == "Grunt") {
+					if (backend_helper == "grunt") {
 						for (var i = 0; i < modules.length; i++) {
-							if (modules[i]["name"] == "Grunt") {
+							if (modules[i]["name"] == "grunt") {
 								exists = true;
 							}
 						}
 					} else {
 						for (var i = 0; i < modules.length; i++) {
-							if (modules[i]["name"] == "Gulp") {
+							if (modules[i]["name"] == "gulp") {
 								exists = true;
 							}
 						}
@@ -187,9 +223,36 @@
 							"version":$('#'+backend_helper).val().split("?")[1]
 						});
 					}
+					if (backend_helper == "gulp") {
+						modules.push({
+							"name":"gulp-livereload",
+							"version":"v3.8.1"
+						});
+						modules.push({
+							"name":"gulp-nodemon",
+							"version":"v2.0.6"
+						});
+						modules.push({
+							"name":"gulp-notify",
+							"version":"v2.2.0"
+						});
+					}
 				}
 
 				if (repoName && desc && serverJSFilename) {
+
+
+					// $('#finalForm').append('<input type="hidden" name="'+gitProjectName+'" value="'+repoName+'" />');
+					// for (var i in contributors) {
+					// 	$('#finalForm').append('<input type="hidden" name="contributors" value="'+contributors[i]+'" />');
+					// }
+					// $('#finalForm').append('<input type="hidden" name="'+gitProjectDesc+'" value="'+desc+'" />');
+					// for (var i in modules) {
+					// 	$('#finalForm').append('<input type="hidden" name="dependencies['+i+']" value="'+modules[i].name+'" />');
+					// 	$('#finalForm').append('<input type="hidden" name="dependencies['+i+'" value="'+modules[i].version+'" />');
+					// }
+
+
 					$.ajax({
 						url:'/gitStarted',
 						data:{
@@ -207,12 +270,19 @@
 							nodeManager:backend_helper
 						},
 						method:'post'
-					}).done(function(data) {
-						console.log(data);
+					}).done(function (data) {
+						createPopup(data);
 					});
 				}
 			});
 		});
+
+		function createPopup(data) {
+			$('#popup_git_clone > textarea').val(data.gitCloneURL);
+			$('#goDirectlyToRepo').attr('href', data.gitCloneURL);
+			$('#popup_form').removeClass('disabled');
+		}
+
 		function setSelectionRange(input, selectionStart, selectionEnd) {
 		  if (input.setSelectionRange) {
 		    input.focus();
