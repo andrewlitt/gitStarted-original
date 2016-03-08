@@ -91,7 +91,7 @@ var Helper = function () {
         }
     ];
     
-    this.serverBody = `var express = require('express');\nvar app = express();\n\napp.use(bodyParser.json()); // support json encoded bodies\napp.use(bodyParser.urlencoded({ extended: true }));\n\nvar server = app.listen(3000, function () {\n\tvar host = server.address().address;\n\tvar port = server.address().port;\n\tconsole.log('Example app listening at http://%s:%s', host, port);\n});`;
+    this.serverBody = `var app = express();\n\napp.use(bodyParser.json()); // support json encoded bodies\napp.use(bodyParser.urlencoded({ extended: true }));\n\nvar server = app.listen(3000, function () {\n\tvar host = server.address().address;\n\tvar port = server.address().port;\n\tconsole.log('Example app listening at http://%s:%s', host, port);\n});`;
     
     this.gulpStart = `// Dependencies\nvar gulp = require('gulp');\nvar nodemon = require('gulp-nodemon');\nvar notify = require('gulp-notify');\nvar livereload = require('gulp-livereload');\n\n// Task\ngulp.task('default', function() {\n\t// listen for changes\n\tlivereload.listen();\n\t// configure nodemon\n\tnodemon({\n\t\t// the script to run the app\n\t\tscript: '`;
     this.gulpMid = `',\n\t\text: 'js'\n\t}).on('restart', function(){\n\t\t// when the app has restarted, run livereload.\n\t\tgulp.src('`;
@@ -139,12 +139,17 @@ var Helper = function () {
     
     this.generateServerFile = function(serverFile, dependencies) {
         var str = '';
+        var expressCheck = false;
         this.projectData[6].name = serverFile;
         this.projectData[6].path = serverFile;
         
         for (var i in dependencies) {
+            if(dependencies[i].name == 'express')
+                expressCheck = true;
             str += getRequireStatement(dependencies[i].name);
         }
+        if(expressCheck == false)
+            str += 'var express = require(\'express\');\n';  
         str += this.serverBody;
         this.projectData[6].contents = str;
     }

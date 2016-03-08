@@ -1,8 +1,8 @@
 var helper = require('./controllerHelper');
 
-helper.generatePackage('Test', 'zackharley', 'server.js', [
+helper.generateServerFile('server.js', [
     {
-        name: 'fuck-ruby',
+        name: 'express',
         version: '0.1.4'
     },
     {
@@ -10,4 +10,4 @@ helper.generatePackage('Test', 'zackharley', 'server.js', [
         version: '1.5.3'
     }
 ]);
-console.log(helper.projectData[7].contents)
+console.log(helper.projectData[6].contents)
