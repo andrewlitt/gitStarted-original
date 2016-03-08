@@ -1,3 +1,13 @@
-var github = require('./github');
-github.startGithub('zackharley', 'Cornwall1');
-github.addCollaborator('test', 'ColinLMacleod1');
+var helper = require('./controllerHelper');
+
+helper.generatePackage('Test', 'zackharley', 'server.js', [
+    {
+        name: 'fuck-ruby',
+        version: '0.1.4'
+    },
+    {
+        name: 'socket.io',
+        version: '1.5.3'
+    }
+]);
+console.log(helper.projectData[7].contents)
