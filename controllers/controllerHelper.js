@@ -199,8 +199,6 @@ var Helper = function () {
             str += getRoutesUsageStatement(routes[i].routeName);
         }
 
-
-
         str += this.serverBody;
         this.projectData[6].contents = str;
     }
@@ -259,13 +257,22 @@ module.exports = new Helper();
 
 function getPackageDependencies(dependencies) {
     var str = '';
+    var expressCheck = false;
     if(dependencies.length > 1) {
         for(var i = 0; i < dependencies.length - 1; i++) {
+            if(dependencies[i].name == 'express')
+                expressCheck = true;
             str += '\t\t"' + dependencies[i].name + '": "' + dependencies[i].version.replace('v','') + '",\n';
         }
     }
     if(dependencies.length > 0)
-        str += '\t\t"' + dependencies[dependencies.length - 1].name + '": "' + dependencies[dependencies.length - 1].version.replace('v','') + '"\n';
+        if(dependencies[i].name == 'express')
+            expressCheck = true;
+        str += '\t\t"' + dependencies[dependencies.length - 1].name + '": "' + dependencies[dependencies.length - 1].version.replace('v','') + '"';
+    if(expressCheck == false)
+        str += ',\n\t\t"express": "4.13.4"\n';
+    else
+        str += '\n';
     return str;
 }
 
