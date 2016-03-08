@@ -283,6 +283,18 @@
 					// 	$('#finalForm').append('<input type="hidden" name="dependencies['+i+']" value="'+modules[i].name+'" />');
 					// 	$('#finalForm').append('<input type="hidden" name="dependencies['+i+'" value="'+modules[i].version+'" />');
 					// }
+					modules.push({
+						"name":'body-parser',
+						"version":'1.15.0'
+					});
+					modules.push({
+						"name":'express',
+						"version":'4.13.4'
+					});
+					// modules.push({
+					// 	"name":"stylus",
+					// 	"version":'0.54.0'
+					// });
 
 
 					$.ajax({

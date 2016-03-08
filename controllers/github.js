@@ -32,7 +32,9 @@ var Ghub = function () {
             function (error, status, body, headers) {
                 console.log('create repo status: ' + status);
                 if (status == 201) {
-                    if (collaborators) {
+                    if (collaborators && collaborators != 0) {
+                        console.log("COLLABORATORS");
+                        console.log(collaborators);
                         addCollaborators(name, collaborators, username, password, collaborators.length - 1);
                     }
                     addFiles(name, files, username, password, files.length - 1);
@@ -82,7 +84,7 @@ var Ghub = function () {
         if (count < 0) {
             return;
         }
-        console.log('Creating file: ' + files[count]);
+        console.log('Creating file: ' + files[count].path);
         var client = github.client({
             username: username,
             password: password
