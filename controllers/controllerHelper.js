@@ -91,22 +91,29 @@ var Helper = function () {
         }
     ];
     
-    this.serverBody = `app.use(bodyParser.json()); // support json encoded bodies\napp.use(bodyParser.urlencoded({ extended: true }));\n\nvar server = app.listen(3000, function () {\n\tvar host = server.address().address;\n\tvar port = server.address().port;\n\tconsole.log('Example app listening at http://%s:%s', host, port);\n});`;
+    this.serverBody = `var express = require(\'express\');app.use(bodyParser.json()); // support json encoded bodies\napp.use(bodyParser.urlencoded({ extended: true }));\n\nvar server = app.listen(3000, function () {\n\tvar host = server.address().address;\n\tvar port = server.address().port;\n\tconsole.log('Example app listening at http://%s:%s', host, port);\n});`;
     
     this.gulpStart = `// Dependencies\nvar gulp = require('gulp');\nvar nodemon = require('gulp-nodemon');\nvar notify = require('gulp-notify');\nvar livereload = require('gulp-livereload');\n\n// Task\ngulp.task('default', function() {\n\t// listen for changes\n\tlivereload.listen();\n\t// configure nodemon\n\tnodemon({\n\t\t// the script to run the app\n\t\tscript: '`;
     this.gulpMid = `',\n\t\text: 'js'\n\t}).on('restart', function(){\n\t\t// when the app has restarted, run livereload.\n\t\tgulp.src('`;
     this.gulpEnd = `')\n\t\t\t.pipe(livereload())\n\t\t\t.pipe(notify('Reloading page, please wait...'));\n\t})\n})`;
     
+    this.routesStart = 'var express = require(\'express\');\nvar path = require(\'path\');\n\nmodule.exports = (function() {\n\'use strict\';\n\nvar router = express.Router();\n\nrouter.get(\'/views/';
+    this.routesMiddle = '\', function(req, res) {\n\tres.sendFile(path.join(__dirname + \'/../views/';
+    this.routesEnd =    '\'));\n});\nreturn router;\n})();';
+
     this.htmlStart = '<!DOCTYPE html><html><head><title>';
 
     this.htmlEndWBootstrap = `</head><body><nav class="navbar navbar-default"><div class="container-fluid"><div class="navbar-header" style="width:100%; text-align:center;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div></div></nav><div class="container"><div class="row"><div class="col-md-12" style="text-align:center"><h4>Thanks for making a repo through GitStarted</h4></div><div class="col-md-12" style="text-align:center"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></div></body></html>`;
     
-    this.htmlEnd = `</head><body><div style="text-align:center; width:100%;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div><div ><div style="text-align:center; width:100%;"><h4>Thanks for making a repo through GitStarted</h4></div><div style="text-align:center; width:100%;"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></body></html>`;
+    this.htmlEnd = `'</head><body><div style="text-align:center; width:100%;"><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a><a target="_blank" style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="https://github.com/zackharley/QHacks"><img style="width:30px;" alt="Brand" src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png"></a><a style="text-align: center;float: none;display: inline-block;" class="navbar-brand" href="#"><img style="width: 30px;" alt="Brand" src="http://pngimg.com/upload/heart_PNG706.png"></a></div><div ><div style="text-align:center; width:100%;"><h4>Thanks for making a repo through GitStarted</h4></div><div style="text-align:center; width:100%;"><h4>Woot!</h4><iframe style="margin-top:15px; border:0px;" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/IKqV7DB8Iwg?autoplay=1"></iframe></div></div></body></html>`;
 
     this.generateFiles = function(data, callback) {
         console.log('HERE!');
         github.startGithub(data.gitUsername, data.gitPassword);
-        this.generateServerFile(data.serverName, data.dependencies);
+        if (data.routes.length > 0) {
+            this.addRoutes(data.routes);
+        }
+        this.generateServerFile(data.serverName, data.dependencies, data.routes);
         this.generatePackage(data.gitProjectName, data.gitUsername, data.serverName, data.dependencies);
         console.log('NODE MANAGER');
         console.log(data.nodeManager);
@@ -120,6 +127,37 @@ var Helper = function () {
         var files = this.scanFiles(this.projectData, data.gitProjectName, data.gitProjectDesc);
         console.log(files);
         github.createRepo(data.gitProjectName, data.gitProjectDesc, files, data.collaborators, callback);
+    }
+
+    this.addRoutes = function(routes) {
+        for (var i = 0; i < routes.length; i++) {
+            this.projectData.push({
+                'type': 'folder',
+                'name': 'views',
+                'path': 'views',
+                'children': [
+                    {
+                        'type': 'file',
+                        'name': routes[i].routeName+'.html',
+                        'path': 'views/'+routes[i].routeName+'.html',
+                        'contents': '<!DOCTYPE html>\n<head>\n<title>'+routes[i].routeName+'</title>\n</head>\n<body>\n\t<h1>'+routes[i].routeName+'</h1>\n</body>\n</html>'
+                    }
+                ]
+            });
+            this.projectData.push({
+                'type': 'folder',
+                'name': 'routes',
+                'path': 'routes',
+                'children': [
+                    {
+                        'type': 'file',
+                        'name': routes[i].routeName+'.js',
+                        'path': 'routes/'+routes[i].routeName+'.js',
+                        'contents': this.routesStart + routes[i].routeName + this.routesMiddle + routes[i].routeName + this.routesEnd
+                    }
+                ]
+            });
+        }
     }
     
     this.scanFiles = function(root, repoName, desc){
@@ -137,7 +175,7 @@ var Helper = function () {
         return files;
     }
     
-    this.generateServerFile = function(serverFile, dependencies) {
+    this.generateServerFile = function(serverFile, dependencies, routes) {
         var str = '';
         this.projectData[6].name = serverFile;
         this.projectData[6].path = serverFile;
@@ -145,6 +183,19 @@ var Helper = function () {
         for (var i in dependencies) {
             str += getRequireStatement(dependencies[i].name);
         }
+        for (var i in routes) {
+            if (i == 0) {
+                str += '// View \n';
+            }
+            str += getRoutesReferenceStatement(routes[i].routeName);
+        }
+        for (var i in routes) {
+            if (i == 0) {
+                str += '// Routes \n';
+            }
+            str += getRoutesUsageStatement(routes[i].routeName);
+        }
+
         str += this.serverBody;
         this.projectData[6].contents = str;
     }
@@ -209,6 +260,23 @@ function getPackageDependencies(dependencies) {
     if(dependencies.length > 0)
         str += '\t\t"' + dependencies[dependencies.length - 1].name + '": "' + dependencies[dependencies.length - 1].version.replace('v','') + '"\n';
     return str;
+}
+
+function getRoutesReferenceStatement(routeName) {
+    console.log(routeName);
+    var varName = routeName.replace(/[-|\.][a-z|A-Z]/g, function($1) {
+       return $1.charAt(1).toUpperCase();
+    });
+    console.log('var '+ varName +' = require(\'./routes/'+routeName+'.js\');\n');
+    return 'var '+ varName +' = require(\'./routes/'+routeName+'.js\');\n';
+}
+
+function getRoutesUsageStatement(routeName) {
+    var varName = routeName.replace(/[-|\.][a-z|A-Z]/g, function($1) {
+       return $1.charAt(1).toUpperCase();
+    });
+    console.log('app.use(\'/'+routeName+'\', '+varName+');\n');
+    return 'app.use(\'/'+routeName+'\', '+varName+');\n';
 }
 
 function getRequireStatement(val) {

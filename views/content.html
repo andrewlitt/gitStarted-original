@@ -36,6 +36,9 @@
                                 <input type="radio" name="dev" value="FA" id="radio_none"><label class="description-text" for="radio_none"><span></span>Neither <img src="pictures/Sad.png" class="smallLogo"/></label><br>
                                 <h2 class="description-text">Name your server:</h2>
                                 <input type="text" class="username" id="server_js_filename" placeholder="Server JS Filename" required>
+                                <h2 class="description-text">Do you want routes?</h2>
+                                <input type="checkbox" id="do_you_want_routes">
+                                <input type="text" class="username" id="route_requests" style="display:none;" placeholder="Enter routes separated by commas.">
                             </form>
                         </center>
 
@@ -95,14 +98,26 @@
 	<script>
 		$(document).ready(function() {
 
-			$('#close_popup').on('click', function(e) {
+			$closePopup = $('#close_popup'),
+			$routesCheckbox = $('#do_you_want_routes'),
+			$routesInput = $('#route_requests');
+
+			$closePopup.on('click', function(e) {
 				e.preventDefault();
 				$(this.parentNode.parentNode.parentNode).addClass('disabled');
 			});
 
+			$routesCheckbox.on('change', function(e) {
+				e.preventDefault();
+				if ($(this).is(':checked')) {
+					$routesInput.fadeIn(500);
+				} else {
+					$routesInput.fadeOut(500);
+				}
+			});
+
 			var $search_modules_results = $("#search_module_results");
 			var $search_modules_form = $("#search_modules_form");
-			console.log($('#search_modules_input').val());
 			$search_modules_form.on('submit', function(e) {
 				e.preventDefault();
 				$search_modules_results.empty();
@@ -186,11 +201,28 @@
 				var none = $('#radio_none').is(':checked') ? true : false;
 				var backend_helper = grunt == true ? "grunt" : gulp == true ? "gulp" : null;
 				var collaborators = $('#git_contributors').val().split(',');
-
-
-
+				
 				var modules = [];
-				console.log(tempModules);
+				var routes = [];
+
+				if ($routesCheckbox.is(':checked')) {
+					modules.push({
+						"name":'express',
+						"version":'4.13.4'
+					});
+					modules.push({
+						"name":'path',
+						"version":'0.12.7'
+					});
+					var value = $routesInput.val() ? $routesInput.val() : '';
+					value = value.split(',');
+					for (var i = 0; i < value.length; i++) {
+						routes.push({
+							"routeName":value[i]
+						});
+					}
+				}
+
 				if (tempModules.length > 0) {
 					for (var i = 0; i < tempModules.length; i++) {
 						var info = $(tempModules[i]).val();
@@ -267,7 +299,8 @@
 								fontAwesome:fontAwesome
 							},
 							collaborators:collaborators,
-							nodeManager:backend_helper
+							nodeManager:backend_helper,
+							routes:routes
 						},
 						method:'post'
 					}).done(function (data) {
