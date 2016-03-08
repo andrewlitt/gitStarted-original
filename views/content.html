@@ -21,7 +21,7 @@
                 <h2 style = "padding-top:5vh" class = "description-text">Hello {{name}}! Let's get your repository set up.</h2>
                 <h1 class="loginTitle">Setup Repository</h1>
                  <form class="gitrepo_field" method="post" action="/modules">
-                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name" required>
+                    <input type="text" id="git_reponame" name="git_reponame" class="username" placeholder="Repository Name (defaults to server.js)">
                     <input type="text" id="git_contributors" name="git_contributors" class="password" placeholder="Contributors (Username)" required>
                      <input id="git_description" name="git_description" class="username" placeholder="Repository Description" required>
                      <center>
@@ -173,7 +173,7 @@
 
 			$('#make-it-happen-form').on('submit', function(e) {
 				e.preventDefault();
-				var repoName = $('#git_reponame').val();
+				var repoName = $('#git_reponame').val() ? $('#git_reponame').val() : 'server.js';
 				var contributors = $('#git_contributors').val();
 				var desc = $('#git_description').val();
 				var tempModules = $('li.popular_modules > label > input[type=checkbox]:checked');
