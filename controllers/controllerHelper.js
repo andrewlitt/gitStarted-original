@@ -166,7 +166,7 @@ var Helper = function () {
     }
     
     this.generateREADME = function(projectName, description, manager) {
-        this.projectData[9].contents = `#` + projectName + `\n\n` + description + `\n\n## Installation\n\nIf you do not have Node.js, navigate to their [website](https://nodejs.org/en/) to install. After installing Node, navigate to the folder containing your project.\nTo install:\n\`\`\`\nnpm install\n\`\`\`\n\n## Usage\n\nTo run:\n\`\`\`\n` + manager + `\n\`\`\`\n\n## Contributing\n\n1. Fork it!\n2. Create your feature branch: \`git checkout -b my-new-feature\`\n3. Commit your changes: \`git commit -am 'Add some feature'\\n4. Push to the branch: \`git push origin my-new-feature\`\n5. Submit a pull request :D\n\n## Credits\n\nMade with :heart: using [GitStarted](http://developertool.azurewebsites.net/)\n\n## License\n` + this.projectData[8].contents;
+        this.projectData[9].contents = `#` + projectName + `\n\n` + description + `\n\n## Installation\n\nIf you do not have Node.js, navigate to their [website](https://nodejs.org/en/) to install. After installing Node, navigate to the folder containing your project.\nTo install:\n\`\`\`\nnpm install\n\`\`\`\n\n## Usage\n\nTo run:\n\`\`\`\n` + manager + `\n\`\`\`\n\n## Contributing\n\n1. Fork it!\n2. Create your feature branch: \`git checkout -b my-new-feature\`\n3. Commit your changes: \`git commit -am 'Add some feature'\\n4. Push to the branch: \`git push origin my-new-feature\`\n5. Submit a pull request :D\n\n## Credits\n\nMade with :heart: using [GitStarted](https://github.com/zackharley/QHacks)\n\n## License\n` + this.projectData[8].contents;
     }
     
     this.generateHTML = function(data) {
@@ -212,5 +212,8 @@ function getPackageDependencies(dependencies) {
 }
 
 function getRequireStatement(val) {
-    return "var " + val + " = require('" + val + "');\n";
+    var varName = val.replace(/[-|\.][a-z|A-Z]/g, function($1) {
+	   return $1.charAt(1).toUpperCase();
+    });
+    return "var " + varName + " = require('" + val + "');\n";
 }
