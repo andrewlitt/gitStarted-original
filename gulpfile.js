@@ -11,7 +11,7 @@ gulp.task('default', function() {
 	// configure nodemon
 	nodemon({
 		// the script to run the app
-		script: 'index.js',
+		script: 'server.js',
 		ext: 'js'
 	}).on('restart', function(){
 		// when the app has restarted, run livereload.

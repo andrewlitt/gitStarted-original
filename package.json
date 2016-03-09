@@ -6,7 +6,7 @@
     "url": "https://github.com/zackharley/QHacks"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "adm-zip": "0.4.7",
