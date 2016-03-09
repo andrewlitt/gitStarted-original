@@ -6,10 +6,6 @@ var Ghub = function () {
     this.password = null;
 
     this.startGithub = function (username, password) {
-        this.setCredentials(username, password);
-    }
-
-    this.setCredentials = function (username, password) {
         this.username = username;
         this.password = password;
     }
@@ -45,6 +41,33 @@ var Ghub = function () {
                     // Tell the user invalid repo
                 }
             });
+    }
+    
+    this.checkUser = function(username, callback) {
+        var client = this.createClient();
+        console.log(username);
+        var ghuser = client.user(username);
+        ghuser.info(function(error, body, status, headers){
+            console.log('done');
+            if(!error) {
+                console.log('User exists');
+                return callback(null, 'User exists.');
+            } else {
+                console.log('User doesn\'t exist');
+                return callback(error.statusCode + ' - ' + error, 'User does not exist');
+            }
+        });
+    }
+    
+    this.checkUsers = function(usernames, callback) {
+        console.log(usernames);
+        for(var i in usernames) {
+            this.checkUser(usernames[i], function(err, res) {
+                console.log('User:' + usernames[i]);
+                console.log(err);
+                console.log(res);
+            })
+        }
     }
 
     function addCollaborators(projectName, collaborators, username, password, count) {
