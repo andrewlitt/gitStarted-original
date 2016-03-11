@@ -8,7 +8,6 @@ var octonode = require('octonode');
 var Handlebars = require('handlebars');
 
 
-
 // Controllers
 var models = require('./controllers/controllerHelper.js');
 var github = require('./controllers/github.js')
@@ -30,8 +29,10 @@ app.use(stylus.middleware({
     }
 }));
 
+// Setting public as the basic home.
 app.use(express.static('public'));
 
+// Creating a session variable
 var sess = session({
     secret: 'gitslacking',
 	cookie: { 
@@ -42,14 +43,13 @@ var sess = session({
 	rolling: true
 });
 
-// Setting up the session
-// app.use(app.router);
-
+// Allowing it to parse the body on posts and gets.
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// Forcing it to check for the session and reset it.
 app.use(function (req, res, next) {
     if ('HEAD' == req.method || 'OPTIONS' == req.method) return next();
     res.locals.session = req.session;
@@ -97,15 +97,12 @@ app.post('/githubLogin', function (req, res) {
     }
 });
 
+// The post that creates the entire Git post.
 app.post('/gitStarted', function (req, res) {
-	// console.log(req.body);
-	// console.log(req.session);
 	var data = req.body;
 	data.gitUsername = req.session.client.token.username;
 	data.gitPassword = req.session.client.token.password;
-	console.log(data);
 	models.generateFiles(data, function(url) {
-		console.log("DID YOU GO HERE");
 		if (url) {
 			req.session.gitClone = url;
 			res.redirect('/final');
@@ -115,10 +112,7 @@ app.post('/gitStarted', function (req, res) {
 	});
 });
 
-// app.post('/searchModules', function(req, res) {
-
-// });
-
+// Starting the server.
 var server = app.listen(3000, function () {
 
     var host = server.address().address;
