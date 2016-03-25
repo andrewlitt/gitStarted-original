@@ -24,5 +24,11 @@
     "request": "^2.69.0",
     "stylus": "*.*"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-concat": "^2.6.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-react": "^3.1.0",
+    "gulp-stylus": "^2.3.1"
+  }
 }

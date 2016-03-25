@@ -63,6 +63,8 @@ var slackContent = require('./routes/slack.js');
 var content = require('./routes/content.js');
 var gitLogin = require('./routes/gitlogin.js');
 var finalPage = require('./routes/final.js');
+var loginPage = require('./routes/login.js');
+var registerPage = require('./routes/register.js');
 
 // Setting up the Routes
 app.use('/', sess, indexPage);
@@ -71,6 +73,8 @@ app.get('/GitLogin', sess, gitLogin)
 app.get('/github', sess, content);
 app.post('/searchModules', sess, content);
 app.get('/final', sess, finalPage);
+app.get('/login', sess, loginPage);
+app.get('/register', sess, registerPage);
 
 
 // Getting Post information
