@@ -1,6 +1,8 @@
 
 
 ![alt tag](https://raw.githubusercontent.com/zackharley/QHacks/develop/public/pictures/logoBlack.png)
+
+(View on Devpost)[https://devpost.com/software/qhacks]
 > :trophy: First prize winner at [QHacks 2016](http://devpost.com/software/qhacks)
 
 # What is gitStarted?
